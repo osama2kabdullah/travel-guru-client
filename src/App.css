@@ -1,13 +1,19 @@
 .bannar {
-  background-image: url(./travel-guru//images/Rectangle\ 1.png),  linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+  background-image: url(./travel-guru//images/Rectangle1.png),  linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .card-bannar {
-  background-image: url(./travel-guru//images//Rectangle\ 1.png),linear-gradient(transparent,rgba(0,0,0,0.5));
+  background-image: url(./travel-guru//images//Rectangle1.png),linear-gradient(transparent,rgba(0,0,0,0.5));
   background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.card-bg{
+  background-image: url(./travel-guru/images/sundorbon.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
