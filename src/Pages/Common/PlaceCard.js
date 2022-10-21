@@ -1,24 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Sajek from '../../travel-guru/images/Sajek.png';
 
-const PlaceCard = () => {
+const PlaceCard = ({setPlace, place}) => {
+  const {name, picture}= place;
+  const cardBg = {
+    backgroundImage: `url(${picture})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  }
   return (
-    <Link>
-        <div class="relative overflow-hidden cursor-pointer">
-          <img
-            class="object-cover"
-            src={Sajek}
-            alt="Flower and sky"
-          />
-
-          <div class="absolute bottom-0 left-0 px-2 py-4">
-            <h4 class="mb-3 text-2xl font-bold tracking-tight text-white">
-              Sajek
-            </h4>
-          </div>
-        </div>
-    </Link>
+    <div className="px-0">
+      <div
+      style={cardBg}
+        className="relative mx-2 rounded-xl lg:h-72 h-64 p-3"
+        onDoubleClick={() => setPlace(place)}
+      >
+        <h1 className="text-white absolute bottom-3 text-lg font-bold">{name}</h1>
+      </div>
+    </div>
   );
 };
 
