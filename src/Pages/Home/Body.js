@@ -19,8 +19,6 @@ const Body = ({ setPlace, place }) => {
       });
   }, []);
 
-  console.log(booking);
-
   return (
     <div className="grid lg:mt-12 grid-cols-1 lg:grid-cols-2 gap-3">
       {/* fist section */}

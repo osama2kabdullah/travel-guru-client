@@ -7,7 +7,7 @@ import Login from './Pages/Login/Login';
 
 function App() {
   return (
-    <div>
+    <div className='max-w-[1480px] mx-auto'>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}></Route>

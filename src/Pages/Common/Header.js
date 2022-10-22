@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../travel-guru/logo.png";
+import logoblack from "../../travel-guru/logoblack.png";
 import Button from "./Button";
 
 const Header = ({black}) => {
@@ -13,12 +14,12 @@ const Header = ({black}) => {
 
   return (
     <div className="flex w-11/12 lg:py-8 py-3 gap-2 mx-auto justify-between items-center">
-      <img className="h-16" src={logo} alt="" />
+      <img className="h-16" src={black ? logoblack:logo} alt="" />
       <nav style={{color:`${black}`}} className="flex items-center lg:gap-12 gap-5 text-white">
         {/* search input */}
         <div
           style={{ backgroundColor: "rgba(158, 158, 158, 0.52)" }}
-          className="border-2 p-1 w-4/5 flex items-center gap-2 rounded-md"
+          className="border-2 p-1 w-4/5 flex items-center gap-2  rounded-md"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +27,7 @@ const Header = ({black}) => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 text-white h-6"
           >
             <path
               strokeLinecap="round"
@@ -95,7 +96,7 @@ const Header = ({black}) => {
 const Navlinks = () => {
   return (
     <>
-      <Link>Home</Link>
+      <Link to='/'>Places</Link>
       <Link>Home</Link>
       <Link>Home</Link>
       <Link>Home</Link>
