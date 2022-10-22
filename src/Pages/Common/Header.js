@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../travel-guru/logo.png";
 import Button from "./Button";
 
-const Header = () => {
+const Header = ({black}) => {
   const [openNav, setOpenNav] = useState(false);
 
   const secondNav = `absolute ${
@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div className="flex w-11/12 lg:py-8 py-3 gap-2 mx-auto justify-between items-center">
       <img className="h-16" src={logo} alt="" />
-      <nav className="flex items-center lg:gap-12 gap-5 text-white">
+      <nav style={{color:`${black}`}} className="flex items-center lg:gap-12 gap-5 text-white">
         {/* search input */}
         <div
           style={{ backgroundColor: "rgba(158, 158, 158, 0.52)" }}
@@ -99,9 +99,9 @@ const Navlinks = () => {
       <Link>Home</Link>
       <Link>Home</Link>
       <Link>Home</Link>
-      <div>
+      <Link to='/login'>
         <Button>Login</Button>
-      </div>
+      </Link>
     </>
   );
 };
