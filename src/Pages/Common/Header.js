@@ -4,18 +4,23 @@ import { Link } from "react-router-dom";
 import logo from "../../travel-guru/logo.png";
 import logoblack from "../../travel-guru/logoblack.png";
 import Button from "./Button";
+import auth from "../../firebase.init";
+import { useEffect } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
-const Header = ({black}) => {
+const Header = ({ black }) => {
   const [openNav, setOpenNav] = useState(false);
-
   const secondNav = `absolute ${
     openNav || "hidden"
   } left-0 top-0 h-auto flex flex-col pt-5 px-12 gap-8 w-full bg- pb-12 z-30 text-black bg-white`;
 
   return (
     <div className="flex w-11/12 lg:py-8 py-3 gap-2 mx-auto justify-between items-center">
-      <img className="h-16" src={black ? logoblack:logo} alt="" />
-      <nav style={{color:`${black}`}} className="flex items-center lg:gap-12 gap-5 text-white">
+      <img className="h-16" src={black ? logoblack : logo} alt="" />
+      <nav
+        style={{ color: `${black}` }}
+        className="flex items-center lg:gap-12 gap-5 text-white"
+      >
         {/* search input */}
         <div
           style={{ backgroundColor: "rgba(158, 158, 158, 0.52)" }}
@@ -94,15 +99,49 @@ const Header = ({black}) => {
 };
 
 const Navlinks = () => {
+  const [currentUser, setCurrentUser] = useState("");
+  
+  const userAuth = auth;
+  
+  useEffect(()=>{
+    if(userAuth){
+    onAuthStateChanged(userAuth, (user) => {
+      user ? setCurrentUser(user) : setCurrentUser("");
+    });
+  }
+  },[userAuth])
+
+  const handleSignout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Sign-out successful");
+      })
+      .catch((error) => {
+        console.log("An error happened");
+      });
+  };
+
   return (
     <>
-      <Link to='/'>Places</Link>
+      <Link to="/">Places</Link>
       <Link>Home</Link>
       <Link>Home</Link>
       <Link>Home</Link>
-      <Link to='/login'>
-        <Button>Login</Button>
-      </Link>
+      {currentUser ? (
+        <>
+          <button>
+            <b>
+              {currentUser?.displayName?.split(" ")[0] ||
+                auth.currentUser?.displayName}
+            </b>
+          </button>
+          <Button btn={() => handleSignout()}>Logout</Button>
+        </>
+      ) : (
+        <Link to="/login">
+          <Button>Login</Button>
+        </Link>
+      )}
     </>
   );
 };

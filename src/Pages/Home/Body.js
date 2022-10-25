@@ -26,7 +26,7 @@ const Body = ({ setPlace, place }) => {
         <h1 className="lg:text-5xl text-2xl font-bold">{place?.name}</h1>
         <p className="lg:text-xl py-4">{place.about}</p>
         <div className="w-fit">
-          <Button setBooking={() => setBooking(place)}>Book a tour</Button>
+          <Button btn={() => setBooking(place)}>Book a tour</Button>
         </div>
       </div>
       {/* slider section/form section */}
