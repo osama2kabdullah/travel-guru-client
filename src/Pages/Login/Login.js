@@ -1,50 +1,92 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Common/Button";
 import Header from "../Common/Header";
 import AltLogin from "./AltLogin";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import auth from "../../firebase.init";
+import useSaveUser from "../../hooks/useSaveUser";
 
 const Login = () => {
   const [register, setRegister] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
-  console.log(forgotPass);
+  const [error, setError] = useState(true);
+  const [doc, setDoc] = useState({});
+  const navigate = useNavigate();
   
-  const handleSubmit = async e => {
+  useEffect(() => {
+    if (!error && doc) {
+      fetch("http://localhost:5000/insertUser", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(doc),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem('authorization_token', JSON.stringify(data.token));
+          setError(true);
+          //redirecting
+          navigate('/');
+        });
+    }
+  }, [error, doc, navigate]);
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const firstName = e.target.firstName?.value;
     const lastName = e.target.lastName?.value;
+    const displayName= `${firstName} ${lastName}`;
     const Confpassword = e.target.Confpassword?.value;
     const password = e.target.password?.value;
     const email = e.target.email?.value;
-    
-    if(password === Confpassword && firstName && lastName && email){
+
+    //login or sign up
+    if (password === Confpassword && firstName && lastName && email) {
       await createUserWithEmailAndPassword(auth, email, password)
-      .then(async res=>{
-        if(res.user){
-          await updateProfile(res.user.auth.currentUser, {
-            displayName:`${firstName} ${lastName}`
-          })
-        }
-      })
-      .catch(err=>console.error(err));
-    }else{
+        .then(async (res) => {
+          if (res.user) {
+            await updateProfile(res.user.auth.currentUser, {
+              displayName,
+            });
+            setError(false);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
       await signInWithEmailAndPassword(auth, email, password)
-      .then(res=>console.log(res.user))
-      .catch(err=>console.error(err));
-    }
-    
-  }
-  
+        .then((res) => {
+          console.log(res.user);
+          setError(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+    //set the user data
+    setDoc({ displayName, email });
+  };
+
   return (
     <section>
       <Header black="black" />
       <div className="py-16">
-        <form onSubmit={handleSubmit} className="border grid gap-8 mx-auto p-12 md:w-2/5 w-10/12 rounded">
+        <form
+          onSubmit={handleSubmit}
+          className="border grid gap-8 mx-auto p-12 md:w-2/5 w-10/12 rounded"
+        >
           <h1 className="text-2xl font-bold">
-            {(register ? "Create an account" : "Login")}
+            {register ? "Create an account" : "Login"}
           </h1>
 
           {register && (
@@ -92,7 +134,11 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
-                <span onClick={()=>setForgotPass(true)} className="underline cursor-pointer text-orange-400" to="/forgetpass">
+                <span
+                  onClick={() => setForgotPass(true)}
+                  className="underline cursor-pointer text-orange-400"
+                  to="/forgetpass"
+                >
                   Forget Password
                 </span>
               </div>
@@ -106,7 +152,6 @@ const Login = () => {
               style={{ outline: "none" }}
               type="Confpassword"
               name="Confpassword"
-              
             />
           )}
 

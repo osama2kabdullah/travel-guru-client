@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../travel-guru/logo.png";
 import logoblack from "../../travel-guru/logoblack.png";
 import Button from "./Button";
@@ -100,6 +100,7 @@ const Header = ({ black }) => {
 
 const Navlinks = () => {
   const [currentUser, setCurrentUser] = useState("");
+  const navigate = useNavigate();
   
   const userAuth = auth;
   
@@ -110,11 +111,13 @@ const Navlinks = () => {
     });
   }
   },[userAuth])
-
+  
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
         console.log("Sign-out successful");
+        localStorage.removeItem('authorization_token');
+        navigate('/login');
       })
       .catch((error) => {
         console.log("An error happened");
