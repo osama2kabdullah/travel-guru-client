@@ -12,14 +12,25 @@ import {
 } from "firebase/auth";
 import auth from "../../firebase.init";
 import useSaveUser from "../../hooks/useSaveUser";
+import { useForm } from "react-hook-form";
+import DivSpinner from "../Common/DivSpinner";
 
 const Login = () => {
-  const [register, setRegister] = useState(false);
+  const [registerOk, setRegister] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
   const [error, setError] = useState(true);
   const [doc, setDoc] = useState({});
   const navigate = useNavigate();
+  const [proccessLogin, setProccessLogin] = useState(false);
+  const [logError, setLogError] = useState('');
   
+  useEffect(()=>{
+    if(auth.currentUser){
+      navigate('/')
+    }
+  },[navigate])
+  
+  //store in db
   useEffect(() => {
     if (!error && doc) {
       fetch("http://localhost:5000/insertUser", {
@@ -40,41 +51,49 @@ const Login = () => {
     }
   }, [error, doc, navigate]);
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const firstName = e.target.firstName?.value;
-    const lastName = e.target.lastName?.value;
-    const displayName= `${firstName} ${lastName}`;
-    const Confpassword = e.target.Confpassword?.value;
-    const password = e.target.password?.value;
-    const email = e.target.email?.value;
-
+  //react hook form
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = async data =>{
+    setProccessLogin(true);
+    const {email, firstName, lastName, password, Confpassword} = data;
     //login or sign up
-    if (password === Confpassword && firstName && lastName && email) {
+    if (Confpassword && firstName && lastName && email) {
+      if(password !== Confpassword){
+        setProccessLogin(false);
+        setLogError("Password didn't match")
+        return;
+      }
       await createUserWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
           if (res.user) {
             await updateProfile(res.user.auth.currentUser, {
-              displayName,
+              displayName:`${firstName} ${lastName}`
             });
+            setProccessLogin(false);
             setError(false);
           }
         })
         .catch((err) => {
           console.error(err);
+          setLogError(err.message);
+          setProccessLogin(false);
         });
     } else {
       await signInWithEmailAndPassword(auth, email, password)
         .then((res) => {
           console.log(res.user);
+          setProccessLogin(false);
           setError(false);
         })
         .catch((err) => {
-          console.error(err);
+          setProccessLogin(false);
+          console.error(err.message);
+          setLogError(err.message);
         });
     };
     //set the user data
-    setDoc({ displayName, email });
+    setDoc({ displayName:`${firstName} ${lastName}`, email });
+    
   };
 
   return (
@@ -82,29 +101,33 @@ const Login = () => {
       <Header black="black" />
       <div className="py-16">
         <form
-          onSubmit={handleSubmit}
-          className="border grid gap-8 mx-auto p-12 md:w-2/5 w-10/12 rounded"
+          onSubmit={handleSubmit(onSubmit)}
+          className="border grid relative gap-8 mx-auto p-12 md:w-2/5 w-10/12 rounded"
         >
+          {proccessLogin && <DivSpinner/>}
           <h1 className="text-2xl font-bold">
-            {register ? "Create an account" : "Login"}
+            {registerOk ? "Create an account" : "Login"}
           </h1>
 
-          {register && (
+{logError && <p className="text-red-500"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 inline">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+</svg>{' '}
+ {logError}</p>}
+
+          {registerOk && (
             <>
               <input
                 className="border-b-2 w-full py-2"
                 placeholder="First name"
                 style={{ outline: "none" }}
-                type="firstName"
-                name="firstName"
+                {...register("firstName", { required: true })}
               />
 
               <input
                 className="border-b-2 w-full py-2"
                 placeholder="Last name"
                 style={{ outline: "none" }}
-                type="lastName"
-                name="lastName"
+                {...register("lastName", { required: true })}
               />
             </>
           )}
@@ -113,8 +136,7 @@ const Login = () => {
             className="border-b-2 w-full py-2"
             placeholder="Username or Email"
             style={{ outline: "none" }}
-            type="email"
-            name="email"
+            {...register("email", { required: true })}
           />
 
           <span>
@@ -122,11 +144,10 @@ const Login = () => {
               className="border-b-2 w-full mb-3 py-2"
               placeholder="Password"
               style={{ outline: "none" }}
-              type="password"
-              name="password"
+              {...register("password", { required: true })}
             />
 
-            {register || (
+            {registerOk || (
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <input type="checkbox" name="remember" id="remember" />
@@ -145,24 +166,23 @@ const Login = () => {
             )}
           </span>
 
-          {register && (
+          {registerOk && (
             <input
               className="border-b-2 w-full mb-3 py-2"
               placeholder="Confirm Password"
               style={{ outline: "none" }}
-              type="Confpassword"
-              name="Confpassword"
+              {...register("Confpassword", { required: true })}
             />
           )}
 
-          <Button>Login</Button>
+          <Button>{registerOk ? "Signup" : "Login"}</Button>
           <p className="text-center">
-            {register ? "Already have an account?" : "Don't have an account?"}{" "}
+            {registerOk ? "Already have an account?" : "Don't have an account?"}{" "}
             <span
-              onClick={() => setRegister(!register)}
+              onClick={() => setRegister(!registerOk)}
               className="underline text-orange-400 cursor-pointer"
             >
-              {register ? "Login" : "Create an account"}
+              {registerOk ? "Login" : "Create one"}
             </span>
           </p>
         </form>

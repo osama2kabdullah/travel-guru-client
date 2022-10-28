@@ -101,9 +101,7 @@ const Header = ({ black }) => {
 const Navlinks = () => {
   const [currentUser, setCurrentUser] = useState("");
   const navigate = useNavigate();
-  
   const userAuth = auth;
-  
   useEffect(()=>{
     if(userAuth){
     onAuthStateChanged(userAuth, (user) => {

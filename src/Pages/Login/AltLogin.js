@@ -19,9 +19,8 @@ const AltLogin = () => {
   const [doc, setDoc] = useState({});
   const navigate = useNavigate();
 
-  console.log(doc, "alt login");
-
   const userAuth = auth;
+  // console.log(auth);
   useEffect(() => {
     if (userAuth) {
       onAuthStateChanged(userAuth, (user) => {

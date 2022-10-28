@@ -1,6 +1,6 @@
 progress- login
 1. error handeling
-2. redirecting
+2. redirecting ..OK
 3. secure route
 
 ----
