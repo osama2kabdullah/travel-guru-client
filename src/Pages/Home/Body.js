@@ -7,6 +7,7 @@ import sundorbon from "../../travel-guru/images/sundorbon.png";
 import { useState } from "react";
 import PlaceCard from "../Common/PlaceCard";
 import { useEffect } from "react";
+import RegForm from "./RegForm";
 
 const Body = ({ setPlace, place }) => {
   const [booking, setBooking] = useState(false);
@@ -31,48 +32,8 @@ const Body = ({ setPlace, place }) => {
       </div>
       {/* slider section/form section */}
       {booking ? (
-        <form className="p-6 mx-auto md:w-4/6 lg:mr-16 gap-5 m-2 grid rounded bg-white">
-          <div>
-            <label>Origin</label>
-            <br />
-            <input
-              className="bg-gray-100 mt-1 w-full p-2 text-md"
-              type="text"
-            />
-          </div>
-          <div>
-            <label>Destination</label>
-            <br />
-            <input
-              className="bg-gray-100 mt-1 w-full p-2 text-md"
-              type="text"
-              disabled
-              value={booking.name}
-            />
-          </div>
-          <div className="flex w-full gap-2">
-            <div>
-              <label>Start</label>
-              <br />
-              <input
-                className="bg-gray-100 mt-1 w-full p-2 text-md"
-                type="text"
-              />
-            </div>
-            <div>
-              <label>End</label>
-              <br />
-              <input
-                className="bg-gray-100 mt-1 w-full p-2 text-md"
-                type="text"
-              />
-            </div>
-          </div>
-          <Button>Start Booking</Button>
-          <div className="text-center">
-            or <button onClick={()=>setBooking(false)} className="underline text-sky-300">Cancel</button>
-          </div>
-        </form>
+        // form
+        <RegForm booking={booking} setBooking={setBooking}/>
       ) : (
         <div>
           <Slider
