@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../travel-guru/logo.png";
@@ -7,6 +7,7 @@ import Button from "./Button";
 import auth from "../../firebase.init";
 import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { AppContext } from "../../App";
 
 const Header = ({ black }) => {
   const [openNav, setOpenNav] = useState(false);
@@ -23,7 +24,7 @@ const Header = ({ black }) => {
       >
         {/* search input */}
         <div
-          style={{ backgroundColor: "rgba(158, 158, 158, 0.52)" }}
+          style={black ? {display:'none'} : { backgroundColor: "rgba(158, 158, 158, 0.52)" }}
           className="border-2 p-1 w-4/5 flex items-center gap-2  rounded-md"
         >
           <svg
@@ -99,16 +100,10 @@ const Header = ({ black }) => {
 };
 
 const Navlinks = () => {
-  const [currentUser, setCurrentUser] = useState("");
+  //acces context
+  const currentUser = useContext(AppContext);
+  // const [currentUser, setCurrentUser] = useState("");
   const navigate = useNavigate();
-  const userAuth = auth;
-  useEffect(()=>{
-    if(userAuth){
-    onAuthStateChanged(userAuth, (user) => {
-      user ? setCurrentUser(user) : setCurrentUser("");
-    });
-  }
-  },[userAuth])
   
   const handleSignout = () => {
     signOut(auth)
@@ -125,11 +120,9 @@ const Navlinks = () => {
   return (
     <>
       <Link to="/">Places</Link>
-      <Link>Home</Link>
-      <Link>Home</Link>
-      <Link>Home</Link>
       {currentUser ? (
         <>
+        <Link to='/mybookings'>My_Bookings</Link>
           <button>
             <b>
               {currentUser?.displayName?.split(" ")[0] ||
