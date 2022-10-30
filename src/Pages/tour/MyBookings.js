@@ -9,40 +9,14 @@ import BookingCard from "./BookingCard";
 
 const MyBookings = () => {
   const { data, isLoading } = useQuery("loadbookings", () =>
-    fetch("http://localhost:5000/userbookings", {
+    fetch("https://guarded-ravine-02179.herokuapp.com/userbookings", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
       },
     }).then((res) => res.json())
   );
-
-  const [places, setPlaces] = useState([]);
-
-  useEffect(() => {
-    if (data) {
-        const placesname = [];
-        data.forEach((element) => {
-          fetch("http://localhost:5000/getplace", {
-            method: "POST",
-            headers: {
-              authorization: `Bearer ${localStorage.getItem(
-                "authorization_token"
-              )}`,
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(element),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              placesname.push(data);
-            });
-        });
-        console.log(placesname, 'lofi');
-        setPlaces(placesname);
-    }
-  }, [data]);
-
+  
   if (isLoading) {
     return <DivSpinner />;
   }
@@ -51,8 +25,8 @@ const MyBookings = () => {
       <Header black="black" />
       <div className="w-11/12 mx-auto">
         <h1 className="my-4 block text-2xl font-bold">My Bookings</h1>
-        {places ? (
-          places?.map((place) => <BookingCard place={place} />)
+        {data ? (
+          data?.map((data) => <BookingCard data={data} />)
         ) : (
           <DivSpinner />
         )}
