@@ -5,9 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
 import auth from "../../firebase.init";
 import Button from "../Common/Button";
+import DivSpinner from "../Common/DivSpinner";
 
 const RegForm = ({ setBooking, booking }) => {
   const navigate = useNavigate();
+  const [bookLoading, setBookLoadiung] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,19 +22,22 @@ const RegForm = ({ setBooking, booking }) => {
   console.log(currentUser, "kaka");
 
   const onSubmit = (data) => {
-    fetch('http://localhost:5000/makebooking', {
-      method: 'POST',
+    setBookLoadiung(true);
+    fetch("http://localhost:5000/makebooking", {
+      method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem('authorization_token')}`,
-        'content-type':'application/json'
+        authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
+        "content-type": "application/json",
       },
-      body: JSON.stringify(data)
-    }).then(res=>res.json())
-    .then(data=>{
-      console.log(data);
+      body: JSON.stringify(data),
     })
-    
-    // navigate('/mybookings')
+      .then((res) => res.json())
+      .then((data) => {
+        setBookLoadiung(false);
+        if (data.result?.acknowledged) {
+          navigate("/mybookings");
+        }
+      });
   };
 
   const todayDate = new Date().toLocaleDateString().split("/");
@@ -46,72 +51,79 @@ const RegForm = ({ setBooking, booking }) => {
     <>
       {currentUser ? (
         <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-6 mx-auto md:w-4/6 w-full lg:mr-16 gap-5 m-2 grid rounded bg-white"
-      >
-        <div>
-          <label>Origin</label>
-          <br />
-          <input
-            required
-            {...register("fromPlace")}
-            className="bg-gray-100 mt-1 w-full p-2 text-md"
-            type="text"
-          />
-        </div>
-        <div>
-          <label>Destination</label>
-          <br />
-
-          <input
-            className="bg-gray-100 mt-1 w-full p-2 text-md"
-            {...register("toPlace")}
-            readOnly
-            style={{ outline: "none" }}
-            value={booking.name}
-          />
-        </div>
-
-        <div className="flex gap-2">
-          <div className="w-full">
-            <label>Start</label>
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-6 relative mx-auto md:w-4/6 w-full lg:mr-16 gap-5 m-2 grid rounded bg-white"
+        >
+          {bookLoading && <DivSpinner />}
+          <div>
+            <label>Origin</label>
             <br />
             <input
-              min={fromMin}
-              max={fromMax}
-              {...register("FromDate")}
               required
-              className="bg-gray-100 w-full mt-1 p-2 text-md"
-              type="date"
+              {...register("fromPlace")}
+              className="bg-gray-100 mt-1 w-full p-2 text-md"
+              type="text"
             />
           </div>
-          <div className="w-full">
-            <label>End</label>
+          <div>
+            <label>Destination</label>
             <br />
+
             <input
-              readOnly={!selectedFromDate}
-              min={selectedFromDate}
-              className="bg-gray-100 w-full mt-1 p-2 text-md"
-              type="date"
-              required
-              {...register("toDate")}
+              className="bg-gray-100 mt-1 w-full p-2 text-md"
+              {...register("toPlace")}
+              readOnly
+              style={{ outline: "none" }}
+              value={booking.name}
             />
           </div>
-        </div>
-        <Button>Start Booking</Button>
-        <div className="text-center">
-          or{" "}
-          <button
-            onClick={() => setBooking(false)}
-            className="underline text-sky-300"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+
+          <div className="flex gap-2">
+            <div className="w-full">
+              <label>Start</label>
+              <br />
+              <input
+                min={fromMin}
+                max={fromMax}
+                {...register("FromDate")}
+                required
+                className="bg-gray-100 w-full mt-1 p-2 text-md"
+                type="date"
+              />
+            </div>
+            <div className="w-full">
+              <label>End</label>
+              <br />
+              <input
+                readOnly={!selectedFromDate}
+                min={selectedFromDate}
+                className="bg-gray-100 w-full mt-1 p-2 text-md"
+                type="date"
+                required
+                {...register("toDate")}
+              />
+            </div>
+          </div>
+          <Button>Start Booking</Button>
+          <div className="text-center">
+            or{" "}
+            <button
+              onClick={() => setBooking(false)}
+              className="underline text-sky-300"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       ) : (
         <div className="p-6 mx-auto md:w-4/6 w-full lg:mr-16 gap-5 m-2 grid rounded bg-white">
-          <h1>You must <Link to='/login' className="underline font-bold text-orange-500">Login</Link> first</h1>
+          <h1>
+            You must{" "}
+            <Link to="/login" className="underline font-bold text-orange-500">
+              Login
+            </Link>{" "}
+            first
+          </h1>
         </div>
       )}
     </>
