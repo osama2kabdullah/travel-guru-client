@@ -6,10 +6,13 @@ import { AppContext } from "../../App";
 import auth from "../../firebase.init";
 import Button from "../Common/Button";
 import DivSpinner from "../Common/DivSpinner";
+import PageRequire from "../Common/PageRequire";
 
 const RegForm = ({ setBooking, booking }) => {
   const navigate = useNavigate();
   const [bookLoading, setBookLoadiung] = useState(false);
+  const [dataErr, setDataErr] = useState(false);
+  console.log("dataErr", dataErr);
   const {
     register,
     handleSubmit,
@@ -20,6 +23,7 @@ const RegForm = ({ setBooking, booking }) => {
   //context access
   const currentUser = useContext(AppContext);
 
+  //submit booking data
   const onSubmit = (data) => {
     setBookLoadiung(true);
     fetch("http://localhost:5000/makebooking", {
@@ -36,6 +40,7 @@ const RegForm = ({ setBooking, booking }) => {
         if (data.result?.acknowledged) {
           navigate("/mybookings");
         }
+        setDataErr(data);
       });
   };
 
@@ -54,65 +59,77 @@ const RegForm = ({ setBooking, booking }) => {
           className="p-6 relative mx-auto md:w-4/6 w-full lg:mr-16 gap-5 m-2 grid rounded bg-white"
         >
           {bookLoading && <DivSpinner />}
-          <div>
-            <label>Origin</label>
-            <br />
-            <input
-              required
-              {...register("fromPlace")}
-              className="bg-gray-100 mt-1 w-full p-2 text-md"
-              type="text"
-            />
-          </div>
-          <div>
-            <label>Destination</label>
-            <br />
-
-            <input
-              className="bg-gray-100 mt-1 w-full p-2 text-md"
-              {...register("toPlace")}
-              readOnly
-              style={{ outline: "none" }}
-              value={booking.name}
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <div className="w-full">
-              <label>Start</label>
-              <br />
-              <input
-                min={fromMin}
-                max={fromMax}
-                {...register("FromDate")}
-                required
-                className="bg-gray-100 w-full mt-1 p-2 text-md"
-                type="date"
-              />
+          {dataErr ? (
+            <div>
+              <h1 className="text-2xl text-center">Error {dataErr?.code}</h1>
+              <p className="text-center">{dataErr?.message}</p>
+              <p className="py-12 text-center">
+                You need to Login again
+              </p>
             </div>
-            <div className="w-full">
-              <label>End</label>
-              <br />
-              <input
-                readOnly={!selectedFromDate}
-                min={selectedFromDate}
-                className="bg-gray-100 w-full mt-1 p-2 text-md"
-                type="date"
-                required
-                {...register("toDate")}
-              />
-            </div>
-          </div>
-          <Button>Start Booking</Button>
-          <div className="text-center">
-            or{" "}
-            <button
-              onClick={() => setBooking(false)}
-              className="underline text-sky-300"
-            >
-              Cancel
-            </button>
-          </div>
+          ) : (
+            <>
+              <div>
+                <label>Origin</label>
+                <br />
+                <input
+                  required
+                  {...register("fromPlace")}
+                  className="bg-gray-100 mt-1 w-full p-2 text-md"
+                  type="text"
+                />
+              </div>
+              <div>
+                <label>Destination</label>
+                <br />
+
+                <input
+                  className="bg-gray-100 mt-1 w-full p-2 text-md"
+                  {...register("toPlace")}
+                  readOnly
+                  style={{ outline: "none" }}
+                  value={booking.name}
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <div className="w-full">
+                  <label>Start</label>
+                  <br />
+                  <input
+                    min={fromMin}
+                    max={fromMax}
+                    {...register("FromDate")}
+                    required
+                    className="bg-gray-100 w-full mt-1 p-2 text-md"
+                    type="date"
+                  />
+                </div>
+                <div className="w-full">
+                  <label>End</label>
+                  <br />
+                  <input
+                    readOnly={!selectedFromDate}
+                    min={selectedFromDate}
+                    className="bg-gray-100 w-full mt-1 p-2 text-md"
+                    type="date"
+                    required
+                    {...register("toDate")}
+                  />
+                </div>
+              </div>
+              <Button>Start Booking</Button>
+              <div className="text-center">
+                or{" "}
+                <button
+                  onClick={() => setBooking(false)}
+                  className="underline text-sky-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
         </form>
       ) : (
         <div className="p-6 mx-auto md:w-4/6 w-full lg:mr-16 gap-5 m-2 grid rounded bg-white">

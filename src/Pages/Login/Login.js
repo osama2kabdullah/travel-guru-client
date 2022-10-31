@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../Common/Button";
 import Header from "../Common/Header";
 import AltLogin from "./AltLogin";
@@ -23,11 +23,16 @@ const Login = () => {
   const [proccessLogin, setProccessLogin] = useState(false);
   const [logError, setLogError] = useState("");
 
+  //redirecting
+  const token = localStorage.getItem('authorization_token');
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
-    if (auth.currentUser) {
-      navigate("/");
+    if (token) {
+      setProccessLogin(false);
+      navigate(from, { replace: true });
     }
-  }, [navigate]);
+  }, [token, from, navigate]);
 
   //store in db
   useEffect(() => {
@@ -47,8 +52,6 @@ const Login = () => {
             data.token
           );
           setError(true);
-          //redirecting
-          navigate("/");
         });
     }
   }, [error, doc, navigate]);
@@ -60,6 +63,7 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
+  //submit dta
   const onSubmit = async (data) => {
     setProccessLogin(true);
     const { email, firstName, lastName, password, Confpassword } = data;
@@ -76,7 +80,7 @@ const Login = () => {
             await updateProfile(res.user.auth.currentUser, {
               displayName: `${firstName} ${lastName}`,
             });
-            setProccessLogin(false);
+            
             setError(false);
           }
         })
@@ -89,7 +93,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password)
         .then((res) => {
           console.log(res.user);
-          setProccessLogin(false);
+          
           setError(false);
         })
         .catch((err) => {
