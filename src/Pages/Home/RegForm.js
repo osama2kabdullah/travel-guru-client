@@ -19,11 +19,10 @@ const RegForm = ({ setBooking, booking }) => {
   const selectedFromDate = watch("FromDate");
   //context access
   const currentUser = useContext(AppContext);
-  console.log(currentUser, "kaka");
 
   const onSubmit = (data) => {
     setBookLoadiung(true);
-    fetch("https://guarded-ravine-02179.herokuapp.com/makebooking", {
+    fetch("http://localhost:5000/makebooking", {
       method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,

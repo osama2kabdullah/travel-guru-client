@@ -17,6 +17,7 @@ const BookDetail = () => {
     toDate,
     toPlace,
   } = bookData;
+  console.log(bookData, 'fig');
   const dateCurrection = (date) => {
     const splitDate = date?.split("-");
     const dateStart =

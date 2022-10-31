@@ -6,10 +6,9 @@ const BookingCard = ({ data }) => {
   const { toPlace, FromDate, toDate, fromPlace } = data;
   const [place, setPlace] = useState({});
   const { picture, about } = place;
-  console.log(place);
 
   useEffect(() => {
-    fetch("https://guarded-ravine-02179.herokuapp.com/getplace", {
+    fetch("http://localhost:5000/getplace", {
       method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,

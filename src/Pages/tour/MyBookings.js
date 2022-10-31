@@ -6,10 +6,13 @@ import { useEffect } from "react";
 import DivSpinner from "../Common/DivSpinner";
 import { useState } from "react";
 import BookingCard from "./BookingCard";
+import PageRequire from "../Common/PageRequire";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
 
 const MyBookings = () => {
   const { data, isLoading } = useQuery("loadbookings", () =>
-    fetch("https://guarded-ravine-02179.herokuapp.com/userbookings", {
+    fetch("http://localhost:5000/userbookings", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
@@ -19,6 +22,8 @@ const MyBookings = () => {
   
   if (isLoading) {
     return <DivSpinner />;
+  }if(data?.success === false){
+    return <PageRequire data={data}/>
   }
   return (
     <section>
