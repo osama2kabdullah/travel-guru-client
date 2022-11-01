@@ -18,3 +18,7 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.leaflet-container{
+  width: 100%;
+  height: 100%;
+}

@@ -19,7 +19,6 @@ const MyBookings = () => {
       },
     }).then((res) => res.json())
   );
-  console.log(data, 'mama');
   if (isLoading) {
     return <DivSpinner />;
   }if(data.success === false){
