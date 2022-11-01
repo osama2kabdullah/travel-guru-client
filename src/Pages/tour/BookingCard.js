@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HotelsMap from "./HotelsMap";
 import PLaceMap from "./PLaceMap";
 
 const BookingCard = ({ data }) => {
