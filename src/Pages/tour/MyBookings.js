@@ -22,9 +22,6 @@ const MyBookings = () => {
   if (isLoading) {
     return <DivSpinner />;
   }if(data.success === false){
-    console.log(data, 'mama');
-    // localStorage.removeItem('authorization_token');
-    // signOut(auth);
     return <PageRequire data={data}/>
   }
   return (

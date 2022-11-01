@@ -1,13 +1,15 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PLaceMap from "./PLaceMap";
 
 const BookingCard = ({ data }) => {
   const { toPlace, FromDate, toDate, fromPlace } = data;
   const [place, setPlace] = useState('');
   const { picture, about, latitude, longitude, name } = place;
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     fetch("http://localhost:5000/getplace", {
       method: "POST",
@@ -67,7 +69,7 @@ const BookingCard = ({ data }) => {
           {fullDate_2} ({TotalDays} {TotalDays > 1 ? "days" : "day"})
         </p>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Hotel:</span>{" "}
+          <span className="underline font-bold">Hotel:</span>{" "}You have not book any hotel. <span onClick={()=>navigate('/bookhotel/'+name)} className="text-orange-500 underline cursor-pointer">Book one.</span>
         </p>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Cost:</span>{" "}
