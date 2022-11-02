@@ -12,7 +12,6 @@ const RegForm = ({ setBooking, booking }) => {
   const navigate = useNavigate();
   const [bookLoading, setBookLoadiung] = useState(false);
   const [dataErr, setDataErr] = useState(false);
-  console.log("dataErr", dataErr);
   const {
     register,
     handleSubmit,

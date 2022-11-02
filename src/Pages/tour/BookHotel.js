@@ -58,7 +58,7 @@ const BookHotel = () => {
           <h1 className="text-2xl font-bold">Stay in {name}</h1>
           <div className="grid gap-5 mt-8">
             {error?.hotelse.hotels.map((hotel) => (
-              <HotelCard hotel={hotel} />
+              <HotelCard hotel={hotel} placeName={name} />
             ))}
           </div>
         </div>
