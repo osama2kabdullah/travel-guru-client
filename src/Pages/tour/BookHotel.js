@@ -48,6 +48,8 @@ const BookHotel = () => {
     return <PageRequire data={error} />;
   }
 
+  console.log(error, 'ma');
+  
   return (
     <section>
       <Header black="black" />
@@ -55,14 +57,14 @@ const BookHotel = () => {
         <div>
           <h1 className="text-2xl font-bold">Stay in {name}</h1>
           <div className="grid gap-5 mt-8">
-            {error?.hotel.map((hotel) => (
+            {error?.hotelse.hotels.map((hotel) => (
               <HotelCard hotel={hotel} />
             ))}
           </div>
         </div>
 
         <div className="w-full sticky top-0 rounded-xl overflow-hidden h-[40vh] lg:h-[90vh]">
-          <HotelsMap />
+          <HotelsMap hotel={error}/>
         </div>
       </div>
     </section>

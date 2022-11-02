@@ -24,13 +24,14 @@ const MyBookings = () => {
   }if(data.success === false){
     return <PageRequire data={data}/>
   }
+  
   return (
     <section>
       <Header black="black" />
       <div className="w-11/12 mx-auto">
         <h1 className="my-4 block text-2xl font-bold">My Bookings</h1>
         {data ? (
-          data?.map((data) => <BookingCard data={data} />)
+          data?.map((data, index) => <BookingCard key={index} data={data} />)
         ) : (
           <DivSpinner />
         )}

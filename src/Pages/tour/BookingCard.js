@@ -51,31 +51,31 @@ const BookingCard = ({ data }) => {
   const fullDate_2 = fullDay(date_2);
 
   return (
-    <div class="flex my-12 flex-col bg-white rounded-lg border shadow-md md:flex-row w-full">
+    <div className="flex my-12 flex-col bg-white rounded-lg border shadow-md md:flex-row w-full">
       <img
-        class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-3/6 md:rounded-none md:rounded-l-lg"
+        className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-3/6 md:rounded-none md:rounded-l-lg"
         src={picture}
         alt=""
       />
-      <div class="flex flex-col p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <div className="flex flex-col p-4 leading-normal">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {TotalDays} {TotalDays > 1 ? "days" : "day"} tript in {toPlace} from{" "}
           {fromPlace}
         </h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">About {toPlace}:</span> {about}
         </p>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Date:</span> {fullDate_1} to{" "}
           {fullDate_2} ({TotalDays} {TotalDays > 1 ? "days" : "day"})
         </p>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Hotel:</span>{" "}You have not book any hotel. <span onClick={()=>navigate('/bookhotel/'+name)} className="text-orange-500 underline cursor-pointer">Book one.</span>
         </p>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Cost:</span>{" "}
         </p>
-        <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Map:</span>
           <br />
           <div className="h-64">
@@ -92,13 +92,13 @@ const BookingCard = ({ data }) => {
         <div className="flex justify-between">
           <button
             type="button"
-            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
           >
             Cancel this trip
           </button>
           <button
             type="button"
-            class=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
+            className=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
           >
             Pay now
           </button>
