@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
 
 const MyBookings = () => {
-  const { data, isLoading } = useQuery("loadbookings", () =>
+  const { data, isLoading, error } = useQuery("loadbookings", () =>
     fetch("http://localhost:5000/userbookings", {
       method: "GET",
       headers: {
@@ -19,11 +19,13 @@ const MyBookings = () => {
       },
     }).then((res) => res.json())
   );
+  
   if (isLoading) {
     return <DivSpinner />;
   }if(data.success === false){
     return <PageRequire data={data}/>
   }
+  
   
   return (
     <section>
