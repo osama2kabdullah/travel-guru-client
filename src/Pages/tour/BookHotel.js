@@ -47,8 +47,6 @@ const BookHotel = () => {
   if (error.success === false) {
     return <PageRequire data={error} />;
   }
-
-  console.log(error, 'ma');
   
   return (
     <section>

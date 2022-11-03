@@ -11,6 +11,7 @@ import DivSpinner from "../Common/DivSpinner";
 import { useContext } from "react";
 import { AppContext } from "../../App";
 import PageRequire from "../Common/PageRequire";
+import { useEffect } from "react";
 
 const HotelDetails = () => {
   const btn = "text-2xl text-center cursor-pointer font-bold rounded-full bg-gray-100 h-12 w-12";
@@ -21,14 +22,24 @@ const HotelDetails = () => {
   const [adults, setAdults] = useState(2);
   const [rooms, setRooms] = useState(2);
   const [error, setError] = useState(false);
+  const [validError, setValidError] = useState(false);
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
 
+  useEffect(()=>{
+    // if(currentUser){
+      fetch('http://localhost:5000/usersforbookhotel/'+name+'/'+currentUser.email, {
+        method:'GET',
+        headers: {
+          authorization:`Bearer ${localStorage.getItem('authorization_token')}`
+        }
+      }).then(res=>res.json()).then(data=>{
+        console.log(data);
+        setValidError(data);
+      })
+      
+    // }
+  },[currentUser, name])
+  
   const submitForm = (e) => {
     e.preventDefault();
     setBookLoadiung(true);
@@ -54,6 +65,9 @@ const HotelDetails = () => {
   
   if(error){
     return <PageRequire data={error}/>
+  }
+  if(validError){
+    return <PageRequire data={validError}/>
   }
   
   return (
