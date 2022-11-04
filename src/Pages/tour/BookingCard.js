@@ -7,12 +7,47 @@ import PLaceMap from "./PLaceMap";
 
 const BookingCard = ({ data }) => {
   const { toPlace, FromDate, toDate, fromPlace } = data;
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState("");
+  const [cost, setCost] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
+
+  console.log(totalCost);
   
-  console.log(data, 'nn');
-  
+  //sum of total
+  useEffect(() => {
+    if (cost && data?.hotel) {
+      console.log(cost, data?.hotel, "inside");
+      const numCost = parseFloat(cost.cost.split("$")[1]);
+      const days = parseInt(data?.hotel.days);
+      setTotalCost(days * numCost);
+    }
+  }, [cost, data?.hotel]);
+
+  //get hotel cost
+  useEffect(() => {
+    if (data?.hotel?.hotelName && name) {
+      fetch(
+        "http://localhost:5000/hotel/" + data.hotel.hotelName + "/" + name,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem(
+              "authorization_token"
+            )}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setCost(data);
+        });
+    }
+  }, [data?.hotel?.hotelName, name]);
+
+  //get place info
   useEffect(() => {
     fetch("http://localhost:5000/getplace", {
       method: "POST",
@@ -72,26 +107,32 @@ const BookingCard = ({ data }) => {
           {fullDate_2} ({TotalDays} {TotalDays > 1 ? "days" : "day"})
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Hotel:</span>
-          {' '}
-          {
-            data?.hotel ? <>{data?.hotel.hotelName}. {data?.hotel.rooms} room, {data?.hotel.rooms} adults and {data?.hotel.rooms} children</> : <span>You have not book any hotel. <span onClick={()=>navigate('/bookhotel/'+name)} className="text-orange-500 underline cursor-pointer">Book one.</span></span>
-          }
+          <span className="underline font-bold">Hotel:</span>{" "}
+          {data?.hotel ? (
+            <>
+              {data?.hotel.hotelName}. {data?.hotel.rooms} room,{" "}
+              {data?.hotel.rooms} adults and {data?.hotel.rooms} children
+            </>
+          ) : (
+            <span>
+              You have not book any hotel.{" "}
+              <span
+                onClick={() => navigate("/bookhotel/" + name)}
+                className="text-orange-500 underline cursor-pointer"
+              >
+                Book one.
+              </span>
+            </span>
+          )}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Cost:</span>{" "}
+          <span className="underline font-bold">Cost:</span>{" "}${totalCost} (only hotel biils)
         </p>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Map:</span>
           <br />
           <div className="h-64">
-            {place && (
-              <PLaceMap
-              name={name}
-                lat={latitude}
-                long={longitude}
-              />
-            )}
+            {place && <PLaceMap name={name} lat={latitude} long={longitude} />}
           </div>
         </div>
 

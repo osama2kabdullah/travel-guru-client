@@ -21,6 +21,7 @@ const HotelDetails = () => {
   const [children, setChildren] = useState(0);
   const [adults, setAdults] = useState(2);
   const [rooms, setRooms] = useState(2);
+  const [days, setDays] = useState(1);
   const [error, setError] = useState(false);
   const [validError, setValidError] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +41,8 @@ const HotelDetails = () => {
   const submitForm = (e) => {
     e.preventDefault();
     setBookLoadiung(true);
-    const data = {rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value, }
+    const cost = parseInt(e.target.days.value);
+    const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value, }
     fetch("http://localhost:5000/bookhotel/" + name + "/" + hotelname+'/'+currentUser.email, {
       method: "POST",
       headers: {
@@ -93,7 +95,7 @@ const HotelDetails = () => {
               {bookLoading && <DivSpinner />}
               <div className="flex items-center justify-between">
                 Adults{" "}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-6">
                   <span
                     onClick={() => adults > 1 && setAdults(adults - 1)}
                     className={btn}
@@ -117,7 +119,7 @@ const HotelDetails = () => {
               </div>
               <div className="flex items-center justify-between">
                 Children{" "}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-6">
                   <span
                     onClick={() => children > 0 && setChildren(children - 1)}
                     className={btn}
@@ -142,7 +144,7 @@ const HotelDetails = () => {
               </div>
               <div className="flex items-center justify-between">
                 Rooms{" "}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-6">
                   <span
                     onClick={() => rooms > 1 && setRooms(rooms - 1)}
                     className={btn}
@@ -158,6 +160,30 @@ const HotelDetails = () => {
                   />
                   <span
                     onClick={() => rooms < 5 && setRooms(rooms + 1)}
+                    className={btn}
+                  >
+                    +
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                Days{" "}
+                <div className="flex items-center gap-6">
+                  <span
+                    onClick={() => days > 1 && setDays(days - 1)}
+                    className={btn}
+                  >
+                    -
+                  </span>
+                  <input
+                    type="text"
+                    name="days"
+                    readOnly
+                    value={days}
+                    className="w-3 focus:outline-none bg-transparant"
+                  />
+                  <span
+                    onClick={() =>setDays(days + 1)}
                     className={btn}
                   >
                     +
