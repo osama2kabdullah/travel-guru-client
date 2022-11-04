@@ -26,18 +26,15 @@ const HotelDetails = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    // if(currentUser){
       fetch('http://localhost:5000/usersforbookhotel/'+name+'/'+currentUser.email, {
         method:'GET',
         headers: {
           authorization:`Bearer ${localStorage.getItem('authorization_token')}`
         }
       }).then(res=>res.json()).then(data=>{
-        console.log(data);
         setValidError(data);
       })
       
-    // }
   },[currentUser, name])
   
   const submitForm = (e) => {
@@ -63,11 +60,8 @@ const HotelDetails = () => {
       });
   };
   
-  if(error){
-    return <PageRequire data={error}/>
-  }
-  if(validError){
-    return <PageRequire data={validError}/>
+  if(validError.valid === false || validError?.success === false || error){
+    return <PageRequire data={validError || error}/>
   }
   
   return (
@@ -172,12 +166,12 @@ const HotelDetails = () => {
               </div>
               {currentUser && <Button>Start Booking</Button>}
 
-              <button
+              <p
                 onClick={() => navigate(-1)}
-                className="underline text-sky-300"
+                className="underline text-center cursor-pointer text-sky-300"
               >
                 Cancel
-              </button>
+              </p>
             </form>
           </div>
         </div>

@@ -19,6 +19,9 @@ const RegForm = ({ setBooking, booking }) => {
     formState: { errors },
   } = useForm();
   const selectedFromDate = watch("FromDate");
+  
+  console.log(selectedFromDate, 'kd');
+  
   //context access
   const currentUser = useContext(AppContext);
 
@@ -42,14 +45,23 @@ const RegForm = ({ setBooking, booking }) => {
         setDataErr(data);
       });
   };
+  
+  const ddd = (num) => {
+    return num < 10 ? '0'+num : num;
+  };
+  
+  const date = (yy, mm, dd) =>  {
+    return yy + "-" + ddd(mm) + "-" + ddd(dd);
+  }
 
   const todayDate = new Date().toLocaleDateString().split("/");
-  const fromMin = todayDate[2] + "-" + todayDate[0] + "-" + todayDate[1];
+  const fromMin = date(todayDate[2], todayDate[0], todayDate[1]);
+  
   const afterDate = new Date(Date.now() + 30 * 86400000)
     .toLocaleDateString()
     .split("/");
-  const fromMax = afterDate[2] + "-" + afterDate[0] + "-" + afterDate[1];
-
+  const fromMax = date(afterDate[2], afterDate[0], afterDate[1]);
+  
   return (
     <>
       {currentUser ? (
