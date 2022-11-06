@@ -17,9 +17,14 @@
   - if not paid the cancel button showing.
   - hotel booking info
     - if no hotel booked there show in link that redirecting.
+    - if boked any hotel you see the total cost based one your living days
+    
 ### 3. Hotel booking page
 - there are display some hotels based on tour place
 - there are a map that shown all the hotels exact location by marking
+- by clicking hotel name to redirect hotel booking page
+- in this page included a form and some picture of the hotel
+- after submit you will be redirect the My bookings page
 
 ### 4. Login page
 - login and register system applied (log out button shown in heder)

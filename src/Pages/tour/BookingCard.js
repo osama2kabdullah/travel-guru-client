@@ -13,8 +13,6 @@ const BookingCard = ({ data }) => {
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
 
-  console.log(totalCost);
-  
   //sum of total
   useEffect(() => {
     if (cost && data?.hotel) {
@@ -126,11 +124,13 @@ const BookingCard = ({ data }) => {
           )}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Cost:</span>{" "}${totalCost} (only hotel biils)
+          <span className="underline font-bold">Cost:</span> ${totalCost} (only
+          hotel biils)
         </p>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Map:</span>
           <br />
+
           <div className="h-64">
             {place && <PLaceMap name={name} lat={latitude} long={longitude} />}
           </div>
@@ -144,6 +144,7 @@ const BookingCard = ({ data }) => {
             Cancel this trip
           </button>
           <button
+          onClick={()=>navigate('/pay/'+toPlace)}
             type="button"
             className=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
           >

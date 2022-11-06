@@ -12,6 +12,7 @@ import auth from "./firebase.init";
 import { useQuery } from "react-query";
 import BookHotel from "./Pages/tour/BookHotel";
 import HotelDetails from "./Pages/tour/HotelDetails";
+import PayBookinng from "./Pages/tour/PayBookinng";
 
 export const AppContext = createContext();
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/mybookings" element={<MyBookings />}></Route>
           <Route path="/bookhotel/:name" element={<BookHotel />}></Route>
           <Route path="/bookhotel/:name/:hotelname" element={<HotelDetails/>}></Route>
+          <Route path="/pay/:placeName" element={<PayBookinng/>}></Route>
         </Routes>
       </div>
     </AppContext.Provider>

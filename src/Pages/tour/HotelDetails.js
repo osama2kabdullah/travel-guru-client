@@ -41,7 +41,6 @@ const HotelDetails = () => {
   const submitForm = (e) => {
     e.preventDefault();
     setBookLoadiung(true);
-    const cost = parseInt(e.target.days.value);
     const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value, }
     fetch("http://localhost:5000/bookhotel/" + name + "/" + hotelname+'/'+currentUser.email, {
       method: "POST",
@@ -54,7 +53,7 @@ const HotelDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         setBookLoadiung(false);
-        if(data.result.acknowledged){
+        if(data?.result?.acknowledged){
           navigate('/mybookings')
         }else {
           setError(data);

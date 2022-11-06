@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Common/Header";
 import ahsanManjil from "../../travel-guru/images/places/ahsanManjil.jpg";
 import { useQuery } from "react-query";
-import { useEffect } from "react";
 import DivSpinner from "../Common/DivSpinner";
-import { useState } from "react";
 import BookingCard from "./BookingCard";
 import PageRequire from "../Common/PageRequire";
 import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
 
 const MyBookings = () => {
+
   const { data, isLoading, error } = useQuery("loadbookings", () =>
     fetch("http://localhost:5000/userbookings", {
       method: "GET",
@@ -19,21 +18,23 @@ const MyBookings = () => {
       },
     }).then((res) => res.json())
   );
-  
+
   if (isLoading) {
     return <DivSpinner />;
-  }if(data.success === false){
-    return <PageRequire data={data}/>
   }
-  
-  
+  if (data.success === false) {
+    return <PageRequire data={data} />;
+  }
+
   return (
     <section>
       <Header black="black" />
       <div className="w-11/12 mx-auto">
         <h1 className="my-4 block text-2xl font-bold">My Bookings</h1>
         {data ? (
-          data?.map((data, index) => <BookingCard key={index} data={data} />)
+          data?.map((data, index) => (
+            <BookingCard key={index} data={data} />
+          ))
         ) : (
           <DivSpinner />
         )}
