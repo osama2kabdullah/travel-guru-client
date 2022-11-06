@@ -9,7 +9,6 @@ import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
 
 const MyBookings = () => {
-
   const { data, isLoading, error } = useQuery("loadbookings", () =>
     fetch("http://localhost:5000/userbookings", {
       method: "GET",
