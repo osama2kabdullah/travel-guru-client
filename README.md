@@ -28,3 +28,12 @@
 
 ### 4. Login page
 - login and register system applied (log out button shown in heder)
+
+
+# Mejor Issues (user roll)
+1. when book a hotel the hotel set all the similler places bookings
+2. when paying for a booking the payment implemented all the similler place bookings
+3. How to pay -
+ - book a hotel and pay for that, book a bus/air ticket then pay for it
+ - pay at one time
+   - when book a hotel then pay once after user again book for a bus the payment button again active and user can pay again
