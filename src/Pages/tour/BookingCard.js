@@ -13,6 +13,8 @@ const BookingCard = ({ data }) => {
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
 
+  console.log(place, 'inside');
+  
   //sum of total
   useEffect(() => {
     if (cost && data?.hotel) {
@@ -24,42 +26,42 @@ const BookingCard = ({ data }) => {
   }, [cost, data?.hotel]);
 
   //get hotel cost
-  useEffect(() => {
-    if (data?.hotel?.hotelName && name) {
-      fetch(
-        "http://localhost:5000/hotel/" + data.hotel.hotelName + "/" + name,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem(
-              "authorization_token"
-            )}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setCost(data);
-        });
-    }
-  }, [data?.hotel?.hotelName, name]);
+  // useEffect(() => {
+  //   if (data?.hotel?.hotelName && name) {
+  //     fetch(
+  //       "http://localhost:5000/hotel/" + data.hotel.hotelName + "/" + name,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           authorization: `Bearer ${localStorage.getItem(
+  //             "authorization_token"
+  //           )}`,
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setCost(data);
+  //       });
+  //   }
+  // }, [data?.hotel?.hotelName, name]);
 
   //get place info
   useEffect(() => {
-    fetch("http://localhost:5000/getplace", {
-      method: "POST",
+    if(toPlace){
+    fetch("http://localhost:5000/getplace/"+toPlace, {
+      method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
+        authorization: `Bearer ${localStorage.getItem("authorization_token")}`
+      }
     })
       .then((res) => res.json())
       .then((data) => {
         setPlace(data);
       });
-  }, [data]);
+    }
+  }, [toPlace]);
 
   const dateCurrection = (date) => {
     const splitDate = date?.split("-");
@@ -98,7 +100,8 @@ const BookingCard = ({ data }) => {
           {fromPlace}
         </h5>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">About {toPlace}:</span> {about}
+          <span className="underline font-bold">About {toPlace}:</span> 
+          {about}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Date:</span> {fullDate_1} to{" "}
@@ -115,7 +118,7 @@ const BookingCard = ({ data }) => {
             <span>
               You have not book any hotel.{" "}
               <span
-                onClick={() => navigate("/bookhotel/" + name)}
+                onClick={() => navigate('/'+ name + "/bookhotel")}
                 className="text-orange-500 underline cursor-pointer"
               >
                 Book one.

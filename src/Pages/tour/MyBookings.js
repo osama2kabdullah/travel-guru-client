@@ -24,6 +24,8 @@ const MyBookings = () => {
   if (data.success === false) {
     return <PageRequire data={data} />;
   }
+  
+  console.log(data, 'inside my bookings');
 
   return (
     <section>
@@ -31,8 +33,8 @@ const MyBookings = () => {
       <div className="w-11/12 mx-auto">
         <h1 className="my-4 block text-2xl font-bold">My Bookings</h1>
         {data ? (
-          data?.map((data, index) => (
-            <BookingCard key={index} data={data} />
+          data?.map((data) => (
+            <BookingCard key={data._id} data={data} />
           ))
         ) : (
           <DivSpinner />

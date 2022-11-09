@@ -17,35 +17,27 @@ import HotelCard from "./HotelCard";
 
 const BookHotel = () => {
   const { name } = useParams();
-  //context access
-  const currentUser = useContext(AppContext);
-  //states
   const [error, setError] = useState(null);
 
-  //verify user
+  //verify user and get hotels data
   useEffect(() => {
-    if (currentUser.email) {
       fetch("http://localhost:5000/hotels/" + name, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
             "authorization_token"
-          )} ${currentUser.email}`,
+          )}`,
         },
       })
         .then((res) => res.json())
         .then((data) => {
           setError(data);
         });
-    }
-  }, [name, currentUser.email]);
+        
+  }, [name]);
 
   if (!error) {
     return;
-  }
-
-  if (error.success === false) {
-    return <PageRequire data={error} />;
   }
   
   return (
@@ -55,14 +47,14 @@ const BookHotel = () => {
         <div>
           <h1 className="text-2xl font-bold">Stay in {name}</h1>
           <div className="grid gap-5 mt-8">
-            {error?.hotelse.hotels.map((hotel) => (
+            {error.hotels?.map((hotel) => (
               <HotelCard hotel={hotel} placeName={name} />
             ))}
           </div>
         </div>
 
         <div className="w-full sticky top-0 rounded-xl overflow-hidden h-[40vh] lg:h-[90vh]">
-          <HotelsMap hotel={error}/>
+          <HotelsMap hotel={error?.hotels}/>
         </div>
       </div>
     </section>
