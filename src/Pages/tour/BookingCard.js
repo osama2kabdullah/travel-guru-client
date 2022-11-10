@@ -1,34 +1,59 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../App";
 import HotelsMap from "./HotelsMap";
 import PLaceMap from "./PLaceMap";
 
-const BookingCard = ({ data }) => {
+const BookingCard = ({ data, refetch }) => {
   const { toPlace, FromDate, toDate, fromPlace, _id, hotel, payStatus } = data;
   const [place, setPlace] = useState("");
-  const [cost, setCost] = useState(0);
-  // const [totalCost, setTotalCost] = useState(0);
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
+  const currentUser = useContext(AppContext);
+
+  console.log(name, 'nme');
   
   //get place detail
   useEffect(() => {
-    if(toPlace){
-    fetch("http://localhost:5000/getplace/"+toPlace, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("authorization_token")}`
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPlace(data);
-      });
+    if (toPlace) {
+      fetch("https://guarded-ravine-02179.herokuapp.com/getplace/" + toPlace, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "authorization_token"
+          )}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPlace(data);
+        });
     }
   }, [toPlace]);
 
+  //cancelTour
+  const cancelTour = (id, email) => {
+    const procceed = window.confirm("You want to Delete?");
+    if (procceed) {
+      fetch("https://guarded-ravine-02179.herokuapp.com/cancelTour/" + id, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "authorization_token"
+          )} ${email}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          refetch();
+        });
+    }
+  };
+
+  //date
   const dateCurrection = (date) => {
     const splitDate = date?.split("-");
     const dateStart =
@@ -52,7 +77,7 @@ const BookingCard = ({ data }) => {
 
   const fullDate_1 = fullDay(date_1);
   const fullDate_2 = fullDay(date_2);
-  
+
   return (
     <div className="flex my-12 flex-col bg-white rounded-lg border shadow-md md:flex-row w-full">
       <img
@@ -66,7 +91,7 @@ const BookingCard = ({ data }) => {
           {fromPlace}
         </h5>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">About {toPlace}:</span> 
+          <span className="underline font-bold">About {toPlace}:</span>
           {about}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -77,14 +102,14 @@ const BookingCard = ({ data }) => {
           <span className="underline font-bold">Hotel:</span>{" "}
           {hotel ? (
             <>
-              {hotel?.hotelName}. {hotel?.rooms} room,{" "}
-              {hotel?.adults} adults and {hotel?.children} children
+              {hotel?.hotelName}. {hotel?.rooms} room, {hotel?.adults} adults
+              and {hotel?.children} children
             </>
           ) : (
             <span>
               You have not book any hotel.{" "}
               <span
-                onClick={() => navigate('/'+ name + "/bookhotel/"+_id)}
+                onClick={() => navigate("/" + name + "/bookhotel/" + _id)}
                 className="text-orange-500 underline cursor-pointer"
               >
                 Book one.
@@ -93,10 +118,8 @@ const BookingCard = ({ data }) => {
           )}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Cost:</span> 
-          ${hotel?.totalCost}
-           (only
-          hotel biils)
+          <span className="underline font-bold">Cost:</span>${hotel?.totalCost}
+          (only hotel biils)
         </p>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Map:</span>
@@ -108,23 +131,25 @@ const BookingCard = ({ data }) => {
         </div>
 
         <div className="flex justify-between">
-          <button
-            type="button"
-            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-          >
-            Cancel this trip
-          </button>
-          
-          {
-            payStatus || <button
-            onClick={()=>navigate('/pay/'+_id)}
+          {currentUser?.email && (
+            <button
+              onClick={() => cancelTour(_id, currentUser?.email)}
+              type="button"
+              className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            >
+              Cancel this trip
+            </button>
+          )}
+
+          {payStatus || (
+            <button
+              onClick={() => navigate("/pay/" + _id)}
               type="button"
               className=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
             >
               Pay (${hotel?.totalCost})
             </button>
-          }
-          
+          )}
         </div>
       </div>
     </div>

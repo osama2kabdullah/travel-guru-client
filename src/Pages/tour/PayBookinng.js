@@ -21,26 +21,29 @@ const stripePromise = loadStripe(
 const PayBookinng = () => {
   const { bookingId } = useParams();
   const [cost, setCost] = useState("");
-  
+
   //get cost
-  useEffect(()=>{
-    fetch('http://localhost:5000/getcost/'+bookingId, {
-      method:'GET',
-      headers:{
-        authorization: `Bearer ${localStorage.getItem('authorization_token')}`
-      }
-    }).then(res=>res.json()).then(data=>{
-      setCost(data.totalCost);
+  useEffect(() => {
+    fetch("https://guarded-ravine-02179.herokuapp.com/getcost/" + bookingId, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
+      },
     })
-  },[bookingId])
+      .then((res) => res.json())
+      .then((data) => {
+        setCost(data.totalCost);
+      });
+  }, [bookingId]);
 
   return (
     <div>
       <Header black="black" />
-
+      <div className="h-[80vh] py-[25vh]">
       <Elements stripe={stripePromise}>
-        <CheckoutForm cost={cost} bookingId={bookingId}/>
+        <CheckoutForm cost={cost} bookingId={bookingId} />
       </Elements>
+      </div>
     </div>
   );
 };
@@ -54,13 +57,13 @@ const CheckoutForm = ({ cost, bookingId }) => {
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState("");
   const currentUser = useContext(AppContext);
-  const [transection, setTransection] = useState('');
+  const [transection, setTransection] = useState("");
 
   //update user booking data
   useEffect(() => {
     if (transection && currentUser) {
-        const {id, currency, amount} = transection;
-      fetch("http://localhost:5000/updateforpay/"+ bookingId, {
+      const { id, currency, amount } = transection;
+      fetch("https://guarded-ravine-02179.herokuapp.com/updateforpay/" + bookingId, {
         method: "PUT",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -68,20 +71,22 @@ const CheckoutForm = ({ cost, bookingId }) => {
           )} ${currentUser.email}`,
           "content-type": "application/json",
         },
-        body:JSON.stringify({id, amount: amount/100, currency})
-      }).then(res=>res.json()).then(data=>{
-        if(data.acknowledged){
-          navigate('/mybookings')
-        }
+        body: JSON.stringify({ id, amount: amount / 100, currency }),
       })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            navigate("/mybookings");
+          }
+        });
     }
-  }, [transection, currentUser, bookingId]);
+  }, [transection, currentUser, bookingId, navigate]);
 
   //payment intent
   useEffect(() => {
     setSuccess("");
     if (cost) {
-      fetch("http://localhost:5000/paymentIntent", {
+      fetch("https://guarded-ravine-02179.herokuapp.com/paymentIntent", {
         method: "POST",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

@@ -1,5 +1,10 @@
 # Building progress
 
+#### temporary l;ive link - +  hosting:channel: Channel URL (travel-guru-b4986): https://travel-guru-b4986--testing-jnlfa3wh.web.app [expires 2022-11-17 17:15:18]
+
+temporary deploy command 
+```firebase hosting:channel:deploy testing```
+
 ### 1. Home page
 - slider created (can be make bettar)
 - dynamically backgeound image set and details text displaying
@@ -31,9 +36,4 @@
 
 
 # Mejor Issues (user roll)
-1. when book a hotel the hotel set all the similler places bookings
-2. when paying for a booking the payment implemented all the similler place bookings
-3. How to pay -
- - book a hotel and pay for that, book a bus/air ticket then pay for it
- - pay at one time
-   - when book a hotel then pay once after user again book for a bus the payment button again active and user can pay again
+1. Secure payment api and route
