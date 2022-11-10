@@ -6,24 +6,24 @@ import HotelsMap from "./HotelsMap";
 import PLaceMap from "./PLaceMap";
 
 const BookingCard = ({ data }) => {
-  const { toPlace, FromDate, toDate, fromPlace } = data;
+  const { toPlace, FromDate, toDate, fromPlace, _id, hotel } = data;
+  console.log(hotel);
+  // const {days, rooms, totalCost,  adults, children, hotelName} = hotel;
   const [place, setPlace] = useState("");
   const [cost, setCost] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
+  // const [totalCost, setTotalCost] = useState(0);
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
-
-  console.log(place, 'inside');
   
-  //sum of total
-  useEffect(() => {
-    if (cost && data?.hotel) {
-      console.log(cost, data?.hotel, "inside");
-      const numCost = parseFloat(cost.cost.split("$")[1]);
-      const days = parseInt(data?.hotel.days);
-      setTotalCost(days * numCost);
-    }
-  }, [cost, data?.hotel]);
+  // //sum of total
+  // useEffect(() => {
+  //   if (cost && data?.hotel) {
+  //     console.log(cost, data?.hotel, "inside");
+  //     const numCost = parseFloat(cost.cost.split("$")[1]);
+  //     const days = parseInt(data?.hotel.days);
+  //     // setTotalCost(days * numCost);
+  //   }
+  // }, [cost, data?.hotel]);
 
   //get hotel cost
   // useEffect(() => {
@@ -86,7 +86,7 @@ const BookingCard = ({ data }) => {
 
   const fullDate_1 = fullDay(date_1);
   const fullDate_2 = fullDay(date_2);
-
+  
   return (
     <div className="flex my-12 flex-col bg-white rounded-lg border shadow-md md:flex-row w-full">
       <img
@@ -109,16 +109,16 @@ const BookingCard = ({ data }) => {
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           <span className="underline font-bold">Hotel:</span>{" "}
-          {data?.hotel ? (
+          {hotel ? (
             <>
-              {data?.hotel.hotelName}. {data?.hotel.rooms} room,{" "}
-              {data?.hotel.rooms} adults and {data?.hotel.rooms} children
+              {hotel?.hotelName}. {hotel?.rooms} room,{" "}
+              {hotel?.adults} adults and {hotel?.children} children
             </>
           ) : (
             <span>
               You have not book any hotel.{" "}
               <span
-                onClick={() => navigate('/'+ name + "/bookhotel")}
+                onClick={() => navigate('/'+ name + "/bookhotel/"+_id)}
                 className="text-orange-500 underline cursor-pointer"
               >
                 Book one.
@@ -127,7 +127,9 @@ const BookingCard = ({ data }) => {
           )}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          <span className="underline font-bold">Cost:</span> ${totalCost} (only
+          <span className="underline font-bold">Cost:</span> 
+          ${hotel?.totalCost}
+           (only
           hotel biils)
         </p>
         <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">

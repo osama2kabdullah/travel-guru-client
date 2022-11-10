@@ -54,8 +54,8 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/bookdetails" element={<BookDetail />}></Route>
           <Route path="/mybookings" element={<MyBookings />}></Route>
-          <Route path="/:name/bookhotel" element={<BookHotel />}></Route>
-          <Route path="/bookhotel/:name/:hotelname" element={<HotelDetails/>}></Route>
+          <Route path="/:name/bookhotel/:id" element={<BookHotel />}></Route>
+          <Route path="/bookhotel/:name/:hotelname/:bookingId" element={<HotelDetails/>}></Route>
           <Route path="/pay/:placeName" element={<PayBookinng/>}></Route>
         </Routes>
       </div>

@@ -24,8 +24,6 @@ const MyBookings = () => {
   if (data.success === false) {
     return <PageRequire data={data} />;
   }
-  
-  console.log(data, 'inside my bookings');
 
   return (
     <section>

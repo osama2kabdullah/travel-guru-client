@@ -16,7 +16,7 @@ import Rectangle1 from "../../travel-guru/images/Rectangle1.png";
 import HotelCard from "./HotelCard";
 
 const BookHotel = () => {
-  const { name } = useParams();
+  const { name, id } = useParams();
   const [error, setError] = useState(null);
 
   //verify user and get hotels data
@@ -48,7 +48,7 @@ const BookHotel = () => {
           <h1 className="text-2xl font-bold">Stay in {name}</h1>
           <div className="grid gap-5 mt-8">
             {error.hotels?.map((hotel) => (
-              <HotelCard hotel={hotel} placeName={name} />
+              <HotelCard hotel={hotel} placeName={name} id={id} />
             ))}
           </div>
         </div>

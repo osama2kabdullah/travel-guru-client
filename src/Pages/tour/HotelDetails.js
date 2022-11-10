@@ -16,7 +16,7 @@ import { useEffect } from "react";
 const HotelDetails = () => {
   const btn = "text-2xl text-center cursor-pointer font-bold rounded-full bg-gray-100 h-12 w-12";
   const currentUser = useContext(AppContext);
-  const { hotelname, name } = useParams();
+  const { hotelname, name, bookingId } = useParams();
   const [bookLoading, setBookLoadiung] = useState(false);
   const [children, setChildren] = useState(0);
   const [adults, setAdults] = useState(2);
@@ -26,26 +26,27 @@ const HotelDetails = () => {
   const [validError, setValidError] = useState(false);
   const navigate = useNavigate();
 
+  //validate user
   useEffect(()=>{
-      fetch('http://localhost:5000/usersforbookhotel/'+name+'/'+currentUser.email, {
+      fetch('http://localhost:5000/usersforbookhotel/'+name, {
         method:'GET',
         headers: {
-          authorization:`Bearer ${localStorage.getItem('authorization_token')}`
+          authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser?.email}`
         }
       }).then(res=>res.json()).then(data=>{
         setValidError(data);
       })
-      
   },[currentUser, name])
   
+  //submit form
   const submitForm = (e) => {
     e.preventDefault();
     setBookLoadiung(true);
-    const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value, }
-    fetch("http://localhost:5000/bookhotel/" + name + "/" + hotelname+'/'+currentUser.email, {
+    const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value }
+    fetch("http://localhost:5000/bookhotel/" + bookingId + "/"+ hotelname + "/"+ name, {
       method: "POST",
       headers: {
-        authorization: "Bearer " + localStorage.getItem("authorization_token"),
+        authorization: "Bearer " + localStorage.getItem("authorization_token") + " " + currentUser.email,
         "content-type": "application/json",
       },
       body: JSON.stringify(data),
@@ -53,7 +54,7 @@ const HotelDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         setBookLoadiung(false);
-        if(data?.result?.acknowledged){
+        if(data?.acknowledged){
           navigate('/mybookings')
         }else {
           setError(data);

@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Rectangle1 from "../../travel-guru/images/Rectangle1.png";
 
-const HotelCard = ({ hotel, placeName }) => {
+const HotelCard = ({ hotel, placeName, id }) => {
   const { name, review, faclities, cost, company, about } = hotel;
   
   return (
     <div className="grid gap-5 md:flex">
       <img className="rounded-xl h-32" src={Rectangle1} alt="" />
       <div>
-        <Link to={`/bookhotel/${placeName}/${name}`} className="text-xl underline cursor-pointer font-medium">{name}</Link>
+        <Link to={`/bookhotel/${placeName}/${name}/${id}`} className="text-xl underline cursor-pointer font-medium">{name}</Link>
         
         <div className="flex font-medium gap-3 text-gray-600 flex-wrap">
             {
