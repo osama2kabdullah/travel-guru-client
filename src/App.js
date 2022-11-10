@@ -56,7 +56,7 @@ function App() {
           <Route path="/mybookings" element={<MyBookings />}></Route>
           <Route path="/:name/bookhotel/:id" element={<BookHotel />}></Route>
           <Route path="/bookhotel/:name/:hotelname/:bookingId" element={<HotelDetails/>}></Route>
-          <Route path="/pay/:placeName" element={<PayBookinng/>}></Route>
+          <Route path="/pay/:bookingId" element={<PayBookinng/>}></Route>
         </Routes>
       </div>
     </AppContext.Provider>

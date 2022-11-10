@@ -9,7 +9,7 @@ import React from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../App";
 import Button from "../Common/Button";
 import Header from "../Common/Header";
@@ -19,39 +19,35 @@ const stripePromise = loadStripe(
 );
 
 const PayBookinng = () => {
-  const { placeName } = useParams();
+  const { bookingId } = useParams();
   const [cost, setCost] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/userbookings", {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
-      },
+  
+  //get cost
+  useEffect(()=>{
+    fetch('http://localhost:5000/getcost/'+bookingId, {
+      method:'GET',
+      headers:{
+        authorization: `Bearer ${localStorage.getItem('authorization_token')}`
+      }
+    }).then(res=>res.json()).then(data=>{
+      setCost(data.totalCost);
     })
-      .then((res) => res.json())
-      .then((data) => {
-        data.forEach((element) => {
-          if (element.toPlace === placeName) {
-            setCost(element.hotel.Hotelcost);
-          }
-        });
-      });
-  }, [placeName]);
+  },[bookingId])
 
   return (
     <div>
       <Header black="black" />
 
       <Elements stripe={stripePromise}>
-        <CheckoutForm cost={cost} placeName={placeName}/>
+        <CheckoutForm cost={cost} bookingId={bookingId}/>
       </Elements>
     </div>
   );
 };
 
 //CheckoutForm
-const CheckoutForm = ({ cost, placeName }) => {
+const CheckoutForm = ({ cost, bookingId }) => {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const [error, setError] = useState();
   const [success, setSuccess] = useState("");
@@ -60,24 +56,26 @@ const CheckoutForm = ({ cost, placeName }) => {
   const currentUser = useContext(AppContext);
   const [transection, setTransection] = useState('');
 
-  //update user data
+  //update user booking data
   useEffect(() => {
     if (transection && currentUser) {
         const {id, currency, amount} = transection;
-      fetch("http://localhost:5000/updateforpay/" + currentUser?.email + '/'+ placeName, {
+      fetch("http://localhost:5000/updateforpay/"+ bookingId, {
         method: "PUT",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
             "authorization_token"
-          )}`,
+          )} ${currentUser.email}`,
           "content-type": "application/json",
         },
-        body:JSON.stringify({id, amount, currency})
+        body:JSON.stringify({id, amount: amount/100, currency})
       }).then(res=>res.json()).then(data=>{
-        console.log(data);
+        if(data.acknowledged){
+          navigate('/mybookings')
+        }
       })
     }
-  }, [transection, currentUser, placeName]);
+  }, [transection, currentUser, bookingId]);
 
   //payment intent
   useEffect(() => {
