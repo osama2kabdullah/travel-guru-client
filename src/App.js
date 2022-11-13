@@ -14,6 +14,10 @@ import BookHotel from "./Pages/tour/BookHotel";
 import HotelDetails from "./Pages/tour/HotelDetails";
 import PayBookinng from "./Pages/tour/PayBookinng";
 import Dashboard from "./Pages/dashboard/Dashboard";
+import PlacesDashborad from "./Pages/dashboard/PlacesDashborad";
+import UsersDashboard from "./Pages/dashboard/UsersDashboard";
+import HotelsDashboard from "./Pages/dashboard/HotelsDashboard";
+import ToursDashboard from "./Pages/dashboard/ToursDashboard";
 
 export const AppContext = createContext();
 
@@ -31,32 +35,36 @@ function App() {
   
   useEffect(()=>{
     if(currentUser?.email){
-      fetch('http://localhost:5000/admin/'+currentUser.email, {
+      fetch('http://localhost:5000/admin/', {
         method:'GET',
         headers: {
-          authorization:`Bearer ${localStorage.getItem('authorization_token')}`
+          authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser.email}`
         }
       }).then(res=>res.json()).then(data=>{
         seAdmin(data.admin);
       })
     }
   },[currentUser])
-
-  if(admin){
-    return <Dashboard currentUser={currentUser}/>
-  }
   
   return (
     <AppContext.Provider value={currentUser}>
       <div className="max-w-[1480px] mx-auto">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={admin ? <Dashboard/> :<Home />}>
+            {/* for admin */}
+            <Route path="" element={<UsersDashboard/>}/>
+            <Route path="hotels" element={<HotelsDashboard/>}/>
+            <Route path="tours" element={<ToursDashboard/>}/>
+            <Route path="places" element={<PlacesDashborad/>}/>
+          </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/bookdetails" element={<BookDetail />}></Route>
           <Route path="/mybookings" element={<MyBookings />}></Route>
           <Route path="/:name/bookhotel/:id" element={<BookHotel />}></Route>
           <Route path="/bookhotel/:name/:hotelname/:bookingId" element={<HotelDetails/>}></Route>
           <Route path="/pay/:bookingId" element={<PayBookinng/>}></Route>
+          
+          
         </Routes>
       </div>
     </AppContext.Provider>

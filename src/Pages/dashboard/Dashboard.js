@@ -1,31 +1,42 @@
 import React from "react";
+import { useState } from "react";
 import { useContext } from "react";
+import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 import { AppContext } from "../../App";
+import fb from "../../travel-guru/images/icons/fb.png";
 
-const Dashboard = ({currentUser}) => {
-    
-    console.log(currentUser.email);
-    
+const Dashboard = ({ currentUser }) => {
+  const [openLink, setOpenLink] = useState(true);
+
   return (
-    <section className="grid" style={{ gridTemplateColumns: "25% 75%" }}>
-        
-      <div className={`md:block  bg-gray-100 h-screen`}>
+    <section
+      className="grid"
+      style={{ gridTemplateColumns: `${openLink ? "25% 75%" : "50% 50%"}` }}
+    >
+      <div className={`md:block ${openLink && "hidden"} bg-gray-100 h-screen`}>
         <div className="flex justify-around items-center flex-wrap">
-            {/* avatar */}
-          
           <img
-            data-tooltip-target="tooltip-jese"
-            class="w-10 h-10 rounded"
-            src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_1280.png"
-            alt="Medium avatar"
+            className="w-32"
+            src="https://i.picsum.photos/id/517/200/200.jpg?hmac=7n69zdD4qSZs14zMRZPUfLGKHFEIR9jTpoSEN1o990E"
+            alt=""
           />
-          <h1 className="text-xl font-bold">{currentUser.email}</h1>
+          <h1 className="text-xl font-bold">{currentUser?.email}</h1>
+        </div>
+
+        <div className="p-2 leading-9">
+          <SideNave to="">Users</SideNave>
+          <SideNave to="tours">tours</SideNave>
+          <SideNave to="hotels">Hotels</SideNave>
+          <SideNave to="places">places</SideNave>
         </div>
       </div>
+      
       <div>
-        
-      <button>
-        <svg
+        <button
+          onClick={() => setOpenLink(!openLink)}
+          className="md:hidden inline"
+        >
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -39,11 +50,27 @@ const Dashboard = ({currentUser}) => {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
-          </button>
-          
-        hello
+        </button>
+        
+        <div className="p-5">
+        <Outlet />
         </div>
+      </div>
     </section>
+  );
+};
+
+const SideNave = ({ children, to }) => {
+  const resolved = useResolvedPath(to);
+  const match = useMatch({ path: resolved.pathname, end: true });
+
+  return (
+    <Link
+      to={to}
+      className={`text-lg block ${match ? 'bg-orange-400': 'bg-white'} p-2 rounded-md cursor-pointer my-2`}
+    >
+      {children}
+    </Link>
   );
 };
 
