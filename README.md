@@ -15,6 +15,7 @@ temporary deploy command
 
 ### 2. My bookings page
 - here all of the bookings
+- user can filter which booking see like previus booking or future bookings.
 - the single booking card component containing -
   - a photo of place
   - a map with marker for exact location
@@ -37,6 +38,10 @@ temporary deploy command
 ### 4. Login page
 - login and register system applied (log out button shown in heder)
 
+### Admin Dashboard
+
 
 # Issues (user roll)
-1. Filter the user bookings
+1. Sucre payment route and api
+
+

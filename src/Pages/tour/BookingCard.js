@@ -51,6 +51,8 @@ const BookingCard = ({ data, refetch }) => {
     }
   };
   
+  console.log(new Date(toDate) < new Date());
+  
   const difference = new Date(toDate).getTime() - new Date(FromDate).getTime();
   const TotalDays = Math.ceil(difference / (1000 * 3600 * 24)) + 1;
   
@@ -119,25 +121,29 @@ const BookingCard = ({ data, refetch }) => {
         </div>
 
         <div className="flex justify-between">
-          {currentUser?.email && (
-            <button
-              onClick={() => cancelTour(_id, currentUser?.email)}
-              type="button"
-              className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Cancel this trip
-            </button>
-          )}
-
-          {payStatus || (
-            <button
-              onClick={() => navigate("/pay/" + _id)}
-              type="button"
-              className=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
-            >
-              Pay (${hotel?.totalCost})
-            </button>
-          )}
+          
+          {
+            new Date(toDate) <= new Date() ? ''
+            :<button
+            onClick={() => cancelTour(_id, currentUser?.email)}
+            type="button"
+            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium text-xs rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+          >
+            Cancel this trip
+          </button>
+          }
+          
+          {
+            new Date(toDate) <= new Date() || payStatus ? ''
+            :<button
+            onClick={() => navigate("/pay/" + _id)}
+            type="button"
+            className=" shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 text-xs text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br"
+          >
+            Pay (${hotel?.totalCost})
+          </button>
+          }
+          
         </div>
       </div>
     </div>

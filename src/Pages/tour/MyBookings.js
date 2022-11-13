@@ -53,7 +53,7 @@ const MyBookings = () => {
           <DivSpinner />
         )}
         {
-          data?.length <= 0 && <p className="w-fit mx-auto">You have no bookings <span className="text-orange-500 cursor-pointer underline" onClick={()=>navigate('/')}>Book one</span></p>
+          data?.length <= 0 && <p className="w-fit mx-auto">You have no bookings</p>
         }
       </div>
     </section>
