@@ -19,6 +19,9 @@ temporary deploy command
   - a photo of place
   - a map with marker for exact location
   - pay button
+    - by click pay button you will redirect the payment page
+    - here you can pay with card
+    - after payment recieved you will redirect the my bookings page
   - if not paid the cancel button showing.
   - hotel booking info
     - if no hotel booked there show in link that redirecting.
@@ -29,11 +32,11 @@ temporary deploy command
 - there are a map that shown all the hotels exact location by marking
 - by clicking hotel name to redirect hotel booking page
 - in this page included a form and some picture of the hotel
-- after submit you will be redirect the My bookings page
+- after submiting form you will be redirect the My bookings page
 
 ### 4. Login page
 - login and register system applied (log out button shown in heder)
 
 
-# Mejor Issues (user roll)
-1. Secure payment api and route
+# Issues (user roll)
+1. Filter the user bookings

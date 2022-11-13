@@ -12,13 +12,11 @@ const BookingCard = ({ data, refetch }) => {
   const { picture, about, latitude, longitude, name } = place;
   const navigate = useNavigate();
   const currentUser = useContext(AppContext);
-
-  console.log(name, 'nme');
   
   //get place detail
   useEffect(() => {
     if (toPlace) {
-      fetch("https://guarded-ravine-02179.herokuapp.com/getplace/" + toPlace, {
+      fetch("http://localhost:5000/getplace/" + toPlace, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -37,7 +35,7 @@ const BookingCard = ({ data, refetch }) => {
   const cancelTour = (id, email) => {
     const procceed = window.confirm("You want to Delete?");
     if (procceed) {
-      fetch("https://guarded-ravine-02179.herokuapp.com/cancelTour/" + id, {
+      fetch("http://localhost:5000/cancelTour/" + id, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -52,20 +50,10 @@ const BookingCard = ({ data, refetch }) => {
         });
     }
   };
-
-  //date
-  const dateCurrection = (date) => {
-    const splitDate = date?.split("-");
-    const dateStart =
-      splitDate?.[1] + "/" + splitDate?.[2] + "/" + splitDate?.[0];
-    const date_time = new Date(dateStart);
-    return date_time;
-  };
-  const date_1 = dateCurrection(FromDate);
-  const date_2 = dateCurrection(toDate);
-  const difference = date_2.getTime() - date_1.getTime();
+  
+  const difference = new Date(toDate).getTime() - new Date(FromDate).getTime();
   const TotalDays = Math.ceil(difference / (1000 * 3600 * 24)) + 1;
-
+  
   const fullDay = (date) => {
     return date.toLocaleDateString("en-us", {
       weekday: "long",
@@ -75,8 +63,8 @@ const BookingCard = ({ data, refetch }) => {
     });
   };
 
-  const fullDate_1 = fullDay(date_1);
-  const fullDate_2 = fullDay(date_2);
+  const fullDate_1 = fullDay(new Date(FromDate));
+  const fullDate_2 = fullDay(new Date(toDate));
 
   return (
     <div className="flex my-12 flex-col bg-white rounded-lg border shadow-md md:flex-row w-full">
