@@ -10,10 +10,9 @@ const Dashboard = ({ currentUser }) => {
 
   return (
     <section
-      className="grid"
-      style={{ gridTemplateColumns: `${openLink ? "25% 75%" : "50% 50%"}` }}
+      className="flex"
     >
-      <div className={`md:block ${openLink && "hidden"} bg-gray-100 h-screen`}>
+      <div className={`md:block md:w-2/6 w-3/6 ${openLink && "hidden"} md:relative absolute bg-gray-100 h-screen`}>
         <div className="flex justify-around items-center flex-wrap">
           <img
             className="w-32"
@@ -31,10 +30,9 @@ const Dashboard = ({ currentUser }) => {
         </div>
       </div>
       
-      <div>
         <button
           onClick={() => setOpenLink(!openLink)}
-          className="md:hidden inline"
+          className="md:hidden absolute bottom-0"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -52,10 +50,9 @@ const Dashboard = ({ currentUser }) => {
           </svg>
         </button>
         
-        <div className="p-5">
+      <div className="p-5"> 
         <Outlet />
         </div>
-      </div>
     </section>
   );
 };
