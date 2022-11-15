@@ -1,6 +1,6 @@
 # Building progress
 
-#### temporary l;ive link - +  hosting:channel: Channel URL (travel-guru-b4986): https://travel-guru-b4986--testing-jnlfa3wh.web.app [expires 2022-11-17 17:15:18]
+#### temporary l;ive link - +  hosting:channel: Channel URL (travel-guru-b4986): https://travel-guru-b4986--testing-jnlfa3wh.web.app 
 
 temporary deploy command 
 ```firebase hosting:channel:deploy testing```
@@ -42,6 +42,9 @@ temporary deploy command
 
 
 # Issues (user roll)
-1. Sucre payment route and api
+nothings yet
+
+# Upcoming fetures
+1. Bus booking
 
 

@@ -7,7 +7,7 @@ const useValidateUser = (email) => {
   const [data, setData] = useState('');
   useEffect(() => {
     if (email) {
-      fetch("http://localhost:5000/validuser/" + email, {
+      fetch("https://guarded-ravine-02179.herokuapp.com/validuser/" + email, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

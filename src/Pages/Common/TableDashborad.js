@@ -1,11 +1,12 @@
 import React from "react";
 import TData from "../dashboard/TData";
+import TotalDays from "./TotalDays";
 
-const TableDashborad = ({ users, setShowModal }) => {
-  const thead = ["#", "Email", "Name", "Bookings", "", ""];
-
+const TableDashborad = ({ users, setShowModal, thead, bookings }) => {
+  
   return (
     <>
+    
       <thead class="bg-white border-b">
         <tr>
           {thead.map((thed, index) => (
@@ -19,6 +20,43 @@ const TableDashborad = ({ users, setShowModal }) => {
         </tr>
       </thead>
       <tbody>
+      
+        {
+          bookings?.map((booking, index)=><tr class="bg-gray-100 border-b">
+          
+          <td class="px-6 py-4 whitespace-nowrap font-medium ">
+            {index + 1}
+          </td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{booking?.email}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{booking?.toPlace}</td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{booking?.fromPlace}</td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{
+            new Date(booking?.toDate).toLocaleDateString()
+          }</td>
+          
+          
+          <td class="px-6 py-4 whitespace-nowrap">
+            <TotalDays toDate={booking?.toDate} FromDate={booking?.FromDate}/>
+          </td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{booking?.hotel?.hotelName}</td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{booking?.hotel?.totalCost && '$'+booking?.hotel?.totalCost}</td>
+          
+          <td class="px-6 py-4 whitespace-nowrap">{
+          booking?.payStatus ? <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+          Paid
+        </span>:<span class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">
+        Pending
+      </span>
+          }</td>
+          
+        </tr>)
+        }
+        
         {users?.map((user, index) => (
           <tr class="bg-gray-100 border-b">
             <td class="px-6 py-4 whitespace-nowrap font-medium ">

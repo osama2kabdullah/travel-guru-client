@@ -11,10 +11,11 @@ import TableDashborad from "../Common/TableDashborad";
 const UsersDashboard = () => {
   const currentUser = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
+  const thead = ["#", "Email", "Name", "Bookings", "", ""];
 
   //assist function
   const actionFunc = (action, data) => {
-    fetch(`http://localhost:5000/${action}/${data[1]}`,{
+    fetch(`https://guarded-ravine-02179.herokuapp.com/${action}/${data[1]}`,{
         method: 'PATCH',
         headers: {
           authorization: `Bearer ${localStorage.getItem('authorization_token')} ${currentUser?.email}`
@@ -40,7 +41,7 @@ const UsersDashboard = () => {
   
   //load all users
   const { data, isLoading, refetch } = useQuery("loadusers", () =>
-    fetch("http://localhost:5000/allusers", {
+    fetch("https://guarded-ravine-02179.herokuapp.com/allusers", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${
@@ -56,13 +57,14 @@ const UsersDashboard = () => {
     }
   }, [currentUser, refetch]);
 
+  
   return (
     <section className="overflow-hidden">
       <DashboardTitle>Users</DashboardTitle>
       <div className="md:w-[80vw] h-[83vh] w-[87vw] overflow-scroll">
         <TableDashborad
           setShowModal={setShowModal}
-          
+          thead={thead}
           users={data}
           isLoading={isLoading}
         />

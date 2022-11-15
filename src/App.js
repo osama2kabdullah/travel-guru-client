@@ -35,7 +35,7 @@ function App() {
   
   useEffect(()=>{
     if(currentUser?.email){
-      fetch('http://localhost:5000/admin/', {
+      fetch('https://guarded-ravine-02179.herokuapp.com/admin/', {
         method:'GET',
         headers: {
           authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser.email}`

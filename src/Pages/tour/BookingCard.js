@@ -16,7 +16,7 @@ const BookingCard = ({ data, refetch }) => {
   //get place detail
   useEffect(() => {
     if (toPlace) {
-      fetch("http://localhost:5000/getplace/" + toPlace, {
+      fetch("https://guarded-ravine-02179.herokuapp.com/getplace/" + toPlace, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -35,7 +35,7 @@ const BookingCard = ({ data, refetch }) => {
   const cancelTour = (id, email) => {
     const procceed = window.confirm("You want to Delete?");
     if (procceed) {
-      fetch("http://localhost:5000/cancelTour/" + id, {
+      fetch("https://guarded-ravine-02179.herokuapp.com/cancelTour/" + id, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -50,8 +50,6 @@ const BookingCard = ({ data, refetch }) => {
         });
     }
   };
-  
-  console.log(new Date(toDate) < new Date());
   
   const difference = new Date(toDate).getTime() - new Date(FromDate).getTime();
   const TotalDays = Math.ceil(difference / (1000 * 3600 * 24)) + 1;

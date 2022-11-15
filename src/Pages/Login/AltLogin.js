@@ -32,7 +32,7 @@ const AltLogin = () => {
   useEffect(() => {
     if (!error && doc) {
       const { email, displayName, emailVerified, photoURL } = doc;
-      fetch("http://localhost:5000/insertUser", {
+      fetch("https://guarded-ravine-02179.herokuapp.com/insertUser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

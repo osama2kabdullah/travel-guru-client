@@ -28,7 +28,7 @@ const HotelDetails = () => {
 
   //validate user
   useEffect(()=>{
-      fetch('http://localhost:5000/usersforbookhotel/'+name, {
+      fetch('https://guarded-ravine-02179.herokuapp.com/usersforbookhotel/'+name, {
         method:'GET',
         headers: {
           authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser?.email}`
@@ -43,7 +43,7 @@ const HotelDetails = () => {
     e.preventDefault();
     setBookLoadiung(true);
     const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value }
-    fetch("http://localhost:5000/bookhotel/" + bookingId + "/"+ hotelname + "/"+ name, {
+    fetch("https://guarded-ravine-02179.herokuapp.com/bookhotel/" + bookingId + "/"+ hotelname + "/"+ name, {
       method: "POST",
       headers: {
         authorization: "Bearer " + localStorage.getItem("authorization_token") + " " + currentUser.email,
