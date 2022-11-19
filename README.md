@@ -42,7 +42,7 @@ temporary deploy command
 
 
 # Issues (user roll)
-nothings yet
+1. Admin dashboard form modal responsive problem in [Modal.js](./src/Pages/Common/Modal.js)
 
 # Upcoming fetures
 1. Bus booking

@@ -37,7 +37,7 @@ const Login = () => {
   //store in db
   useEffect(() => {
     if (!error && doc) {
-      fetch("https://guarded-ravine-02179.herokuapp.com/insertUser", {
+      fetch("http://localhost:5000/insertUser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

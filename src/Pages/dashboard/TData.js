@@ -9,7 +9,7 @@ const TData = ({email}) => {
   const currentUser = useContext(AppContext);
   const [count, setCount] = useState(0);
   useEffect(()=>{
-    fetch("https://guarded-ravine-02179.herokuapp.com/userbookingscount/"+ email, {
+    fetch("http://localhost:5000/userbookingscount/"+ email, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("authorization_token")} ${

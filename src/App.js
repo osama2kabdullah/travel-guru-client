@@ -35,7 +35,7 @@ function App() {
   
   useEffect(()=>{
     if(currentUser?.email){
-      fetch('https://guarded-ravine-02179.herokuapp.com/admin/', {
+      fetch('http://localhost:5000/admin/', {
         method:'GET',
         headers: {
           authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser.email}`
@@ -56,6 +56,7 @@ function App() {
             <Route path="hotels" element={<HotelsDashboard/>}/>
             <Route path="tours" element={<ToursDashboard/>}/>
             <Route path="places" element={<PlacesDashborad/>}/>
+            {/* for admin */}
           </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/bookdetails" element={<BookDetail />}></Route>

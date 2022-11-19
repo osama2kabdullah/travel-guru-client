@@ -16,7 +16,7 @@ const BookingCard = ({ data, refetch }) => {
   //get place detail
   useEffect(() => {
     if (toPlace) {
-      fetch("https://guarded-ravine-02179.herokuapp.com/getplace/" + toPlace, {
+      fetch("http://localhost:5000/getplace/" + toPlace, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -35,7 +35,7 @@ const BookingCard = ({ data, refetch }) => {
   const cancelTour = (id, email) => {
     const procceed = window.confirm("You want to Delete?");
     if (procceed) {
-      fetch("https://guarded-ravine-02179.herokuapp.com/cancelTour/" + id, {
+      fetch("http://localhost:5000/cancelTour/" + id, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

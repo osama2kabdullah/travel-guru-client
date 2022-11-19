@@ -26,7 +26,7 @@ const RegForm = ({ setBooking, booking }) => {
   //submit booking data
   const onSubmit = (data) => {
     setBookLoadiung(true);
-    fetch("https://guarded-ravine-02179.herokuapp.com/makebooking", {
+    fetch("http://localhost:5000/makebooking", {
       method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,

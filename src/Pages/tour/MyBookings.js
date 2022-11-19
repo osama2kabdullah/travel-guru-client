@@ -14,7 +14,7 @@ const MyBookings = () => {
     
   const navigate = useNavigate();
   const { data, isLoading, error, refetch } = useQuery("loadbookings", () =>
-    fetch("https://guarded-ravine-02179.herokuapp.com/filterbooking/"+filter, {
+    fetch("http://localhost:5000/filterbooking/"+filter, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
