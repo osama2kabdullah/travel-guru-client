@@ -44,13 +44,13 @@ const HotelsDashboard = () => {
       return acc;
     }, {});
   };
-  
+
   //delete
   const proccedAction = (data) => {
-    const ovj = {action: 'delete'}
+    const ovj = { action: "delete" };
     work(data, ovj);
-  }
-  
+  };
+
   //WORK
   const work = (methods, ovj) => {
     //lets call api
@@ -70,18 +70,18 @@ const HotelsDashboard = () => {
       .then((res) => res.json())
       .then((data) => {
         refetch();
-        if(data?.acknowledged){
+        if (data?.acknowledged) {
           setShowModal();
         }
       });
-  }
+  };
 
   //update or add
   const updateOrAdd = (data, methods) => {
     const keys = form.map((form) => data?.[form]?.name);
     const values = form.map((form) => data?.[form]?.value);
     const object = combineArrays(keys, values);
-
+    
     let ovj;
     for (const key in object) {
       if (Object.hasOwnProperty.call(object, key)) {
@@ -112,7 +112,7 @@ const HotelsDashboard = () => {
               </button>
             </div>
             <TableDashborad
-            form={form}
+              form={form}
               setShowModal={setShowModal}
               location={location}
               thead={thead}
@@ -121,7 +121,7 @@ const HotelsDashboard = () => {
         ))}
       </div>
       <Modal
-      proccedAction={proccedAction}
+        proccedAction={proccedAction}
         updateOrAdd={updateOrAdd}
         form={form}
         showModal={showModal}

@@ -1,23 +1,23 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Header from "./Pages/Common/Header";
-import Home from "./Pages/Home/Home";
+import { createContext, lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Login from "./Pages/Login/Login";
-import BookDetail from "./Pages/tour/BookDetail";
-import { createContext, useEffect, useState } from "react";
-import MyBookings from "./Pages/tour/MyBookings";
 import { onAuthStateChanged } from "firebase/auth";
 import auth from "./firebase.init";
 import { useQuery } from "react-query";
-import BookHotel from "./Pages/tour/BookHotel";
-import HotelDetails from "./Pages/tour/HotelDetails";
-import PayBookinng from "./Pages/tour/PayBookinng";
-import Dashboard from "./Pages/dashboard/Dashboard";
-import PlacesDashborad from "./Pages/dashboard/PlacesDashborad";
-import UsersDashboard from "./Pages/dashboard/UsersDashboard";
-import HotelsDashboard from "./Pages/dashboard/HotelsDashboard";
-import ToursDashboard from "./Pages/dashboard/ToursDashboard";
+import DivSpinner from "./Pages/Common/DivSpinner";
+//LAZY
+const PayBookinng = lazy(() => import("./Pages/tour/PayBookinng"));
+const Dashboard = lazy(() => import("./Pages/dashboard/Dashboard"));
+const PlacesDashborad = lazy(() => import("./Pages/dashboard/PlacesDashborad"));
+const UsersDashboard = lazy(() => import("./Pages/dashboard/UsersDashboard"));
+const HotelsDashboard = lazy(() => import("./Pages/dashboard/HotelsDashboard"));
+const ToursDashboard = lazy(() => import("./Pages/dashboard/ToursDashboard"));
+const MyBookings = lazy(() => import("./Pages/tour/MyBookings"));
+const BookHotel = lazy(() => import("./Pages/tour/BookHotel"));
+const HotelDetails = lazy(() => import("./Pages/tour/HotelDetails"));
+const Login = lazy(() => import("./Pages/Login/Login"));
+const BookDetail = lazy(() => import("./Pages/tour/BookDetail"));
+const Home = lazy(() => import("./Pages/Home/Home"));
 
 export const AppContext = createContext();
 
@@ -32,41 +32,48 @@ function App() {
       });
     }
   }, [userAuth]);
-  
-  useEffect(()=>{
-    if(currentUser?.email){
-      fetch('http://localhost:5000/admin/', {
-        method:'GET',
+
+  useEffect(() => {
+    if (currentUser?.email) {
+      fetch("http://localhost:5000/admin/", {
+        method: "GET",
         headers: {
-          authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser.email}`
-        }
-      }).then(res=>res.json()).then(data=>{
-        seAdmin(data.admin);
+          authorization: `Bearer ${localStorage.getItem(
+            "authorization_token"
+          )} ${currentUser.email}`,
+        },
       })
+        .then((res) => res.json())
+        .then((data) => {
+          seAdmin(data.admin);
+        });
     }
-  },[currentUser])
-  
+  }, [currentUser?.email]);
+
   return (
     <AppContext.Provider value={currentUser}>
       <div className="max-w-[1480px] mx-auto">
-        <Routes>
-          <Route path="/" element={admin ? <Dashboard/> :<Home />}>
-            {/* for admin */}
-            <Route path="" element={<UsersDashboard/>}/>
-            <Route path="hotels" element={<HotelsDashboard/>}/>
-            <Route path="tours" element={<ToursDashboard/>}/>
-            <Route path="places" element={<PlacesDashborad/>}/>
-            {/* for admin */}
-          </Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/bookdetails" element={<BookDetail />}></Route>
-          <Route path="/mybookings" element={<MyBookings />}></Route>
-          <Route path="/:name/bookhotel/:id" element={<BookHotel />}></Route>
-          <Route path="/bookhotel/:name/:hotelname/:bookingId" element={<HotelDetails/>}></Route>
-          <Route path="/pay/:bookingId" element={<PayBookinng/>}></Route>
-          
-          
-        </Routes>
+        <Suspense fallback={<DivSpinner/>}>
+          <Routes>
+            <Route path="/" element={admin ? <Dashboard /> : <Home />}>
+              {/* for admin */}
+              <Route path="" element={<UsersDashboard />} />
+              <Route path="hotels" element={<HotelsDashboard />} />
+              <Route path="tours" element={<ToursDashboard />} />
+              <Route path="places" element={<PlacesDashborad />} />
+              {/* for admin */}
+            </Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/bookdetails" element={<BookDetail />}></Route>
+            <Route path="/mybookings" element={<MyBookings />}></Route>
+            <Route path="/:name/bookhotel/:id" element={<BookHotel />}></Route>
+            <Route
+              path="/bookhotel/:name/:hotelname/:bookingId"
+              element={<HotelDetails />}
+            ></Route>
+            <Route path="/pay/:bookingId" element={<PayBookinng />}></Route>
+          </Routes>
+        </Suspense>
       </div>
     </AppContext.Provider>
   );

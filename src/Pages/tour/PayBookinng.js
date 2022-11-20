@@ -5,10 +5,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React from "react";
-import { useContext } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../App";
 import Button from "../Common/Button";

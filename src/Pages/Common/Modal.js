@@ -31,7 +31,8 @@ const Modal = ({ showModal, setShowModal, proccedAction, updateOrAdd }) => {
                               ? "number"
                               : form === "email"
                               ? "email"
-                              : "text"
+                              : form === "picture"
+                              ? "file":'text'
                           }
                           name={form}
                           placeholder={form}

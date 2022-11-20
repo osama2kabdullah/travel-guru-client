@@ -13,7 +13,7 @@ const HotelCard = ({ hotel, placeName, id }) => {
         
         <div className="flex font-medium gap-3 text-gray-600 flex-wrap">
             {
-                faclities.map(facilty=><span>{facilty}</span>)
+                faclities?.map(facilty=><span>{facilty}</span>)
             }
         </div>
         <p>{about}</p>

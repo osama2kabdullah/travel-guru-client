@@ -9,7 +9,7 @@ const HotelsMap = ({ hotel }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {hotel.map((hotel) => (
+      {hotel?.map((hotel) => (
         <Marker position={[hotel.latitude, hotel.longitude]}>
           <Popup>
             {hotel.name}, {hotel.cost}/night <br /> {hotel.address}

@@ -2,8 +2,15 @@ import React from "react";
 import TData from "../dashboard/TData";
 import TotalDays from "./TotalDays";
 
-const TableDashborad = ({ users, setShowModal, thead, bookings, location, form }) => {
-
+const TableDashborad = ({
+  users,
+  setShowModal,
+  thead,
+  bookings,
+  location,
+  form,
+  places,
+}) => {
   return (
     <>
       <thead class="bg-white border-b">
@@ -19,6 +26,7 @@ const TableDashborad = ({ users, setShowModal, thead, bookings, location, form }
         </tr>
       </thead>
       <tbody>
+        {/* bookings */}
         {bookings?.map((booking, index) => (
           <tr class="bg-gray-100 border-b">
             <td class="px-6 py-4 whitespace-nowrap font-medium ">
@@ -63,6 +71,7 @@ const TableDashborad = ({ users, setShowModal, thead, bookings, location, form }
           </tr>
         ))}
 
+        {/* users */}
         {users?.map((user, index) => (
           <tr class="bg-gray-100 border-b">
             <td class="px-6 py-4 whitespace-nowrap font-medium ">
@@ -109,6 +118,7 @@ const TableDashborad = ({ users, setShowModal, thead, bookings, location, form }
           </tr>
         ))}
 
+        {/* hotels */}
         {location?.hotels?.map((hotel, index) => (
           <tr class="bg-gray-100 border-b">
             <td class="px-6 py-4 whitespace-nowrap font-medium ">
@@ -117,12 +127,53 @@ const TableDashborad = ({ users, setShowModal, thead, bookings, location, form }
             <td class="px-6 py-4 whitespace-nowrap">{hotel?.name}</td>
             <td class="px-6 py-4 whitespace-nowrap">{hotel?.cost}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button onClick={()=>setShowModal(['Update this', hotel?.name, location?.name, form])} className="underline text-blue-500 cursor-pointer">
+              <button
+                onClick={() =>
+                  setShowModal([
+                    "Update this",
+                    hotel?.name,
+                    location?.name,
+                    form,
+                  ])
+                }
+                className="underline text-blue-500 cursor-pointer"
+              >
                 Update
               </button>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button onClick={()=>setShowModal(['Remove this', hotel?.name, location?.name])} className="bg-red-100 text-red-800 mr-2 px-2.5 py-0.5 rounded cursor-pointer ">
+              <button
+                onClick={() =>
+                  setShowModal(["Remove this", hotel?.name, location?.name])
+                }
+                className="bg-red-100 text-red-800 mr-2 px-2.5 py-0.5 rounded cursor-pointer "
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        ))}
+
+        {/* places */}
+        {places?.map((place, index) => (
+          <tr class="bg-gray-100 border-b">
+            <td class="px-6 py-4 whitespace-nowrap font-medium ">
+              {index + 1}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">{place?.name}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <button
+              onClick={()=>setShowModal(['Update this', place?.name, 'update', form])}
+              className="underline text-blue-500 cursor-pointer">
+                Update
+              </button>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <button
+              onClick={() =>
+                setShowModal(["Remove this", place?.name, 'remove'])
+              }
+              className="bg-red-100 text-red-800 mr-2 px-2.5 py-0.5 rounded cursor-pointer ">
                 Remove
               </button>
             </td>
