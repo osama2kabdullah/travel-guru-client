@@ -25,7 +25,7 @@ const HotelsDashboard = () => {
   ];
   const currentUser = useContext(AppContext);
   const { data, isLoading, refetch } = useQuery("loadAllHotels", () =>
-    fetch("http://localhost:5000/allhotels", {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/allhotels", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${
@@ -55,7 +55,7 @@ const HotelsDashboard = () => {
   const work = (methods, ovj) => {
     //lets call api
     fetch(
-      `http://localhost:5000/actionhotel/${methods[2]}/${methods[0]}/${methods[1]}`,
+      `https://travel-guru-server-mocha-nine.vercel.app/actionhotel/${methods[2]}/${methods[0]}/${methods[1]}`,
       {
         method: "PUT",
         headers: {

@@ -7,7 +7,7 @@ const useValidateUser = (email) => {
   const [data, setData] = useState('');
   useEffect(() => {
     if (email) {
-      fetch("http://localhost:5000/validuser/" + email, {
+      fetch("https://travel-guru-server-mocha-nine.vercel.app/validuser/" + email, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

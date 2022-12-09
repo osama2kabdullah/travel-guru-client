@@ -37,7 +37,7 @@ const Login = () => {
   //store in db
   useEffect(() => {
     if (!error && doc) {
-      fetch("http://localhost:5000/insertUser", {
+      fetch("https://travel-guru-server-mocha-nine.vercel.app/insertUser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

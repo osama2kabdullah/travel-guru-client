@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     if (currentUser?.email) {
-      fetch("http://localhost:5000/admin/", {
+      fetch("https://travel-guru-server-mocha-nine.vercel.app/admin/", {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

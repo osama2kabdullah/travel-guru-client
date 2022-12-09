@@ -14,7 +14,7 @@ const MyBookings = () => {
     
   const navigate = useNavigate();
   const { data, isLoading, error, refetch } = useQuery("loadbookings", () =>
-    fetch("http://localhost:5000/filterbooking/"+filter, {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/filterbooking/"+filter, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,

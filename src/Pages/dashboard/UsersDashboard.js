@@ -15,7 +15,7 @@ const UsersDashboard = () => {
 
   //assist function
   const actionFunc = (action, data) => {
-    fetch(`http://localhost:5000/${action}/${data[1]}`,{
+    fetch(`https://travel-guru-server-mocha-nine.vercel.app/${action}/${data[1]}`,{
         method: 'PATCH',
         headers: {
           authorization: `Bearer ${localStorage.getItem('authorization_token')} ${currentUser?.email}`
@@ -41,7 +41,7 @@ const UsersDashboard = () => {
   
   //load all users
   const { data, isLoading, refetch } = useQuery("loadusers", () =>
-    fetch("http://localhost:5000/allusers", {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/allusers", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${

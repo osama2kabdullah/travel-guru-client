@@ -15,7 +15,7 @@ const PlacesDashborad = () => {
 
   //load places
   const { data: places, refetch } = useQuery("loadplaces", () =>
-    fetch("http://localhost:5000/allplaces", {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/allplaces", {
       method: "GET",
       headers: {
         authorization: `Brerer ${localStorage.getItem("authorization_token")} ${
@@ -40,7 +40,7 @@ const PlacesDashborad = () => {
   //work
   const work = (methods, ovj) => {
     //lets call api
-    fetch(`http://localhost:5000/actionplace/${methods[1]}/${methods[2]}`, {
+    fetch(`https://travel-guru-server-mocha-nine.vercel.app/actionplace/${methods[1]}/${methods[2]}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${

@@ -13,7 +13,7 @@ const Body = ({ setPlace, place }) => {
   const [booking, setBooking] = useState(false);
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/comonplaces")
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/comonplaces")
       .then((res) => res.json())
       .then((data) => {
         setPlaces(data);

@@ -9,7 +9,7 @@ const TData = ({email}) => {
   const currentUser = useContext(AppContext);
   const [count, setCount] = useState(0);
   useEffect(()=>{
-    fetch("http://localhost:5000/userbookingscount/"+ email, {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/userbookingscount/"+ email, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("authorization_token")} ${

@@ -21,7 +21,7 @@ const BookHotel = () => {
 
   //verify user and get hotels data
   useEffect(() => {
-      fetch("http://localhost:5000/hotels/" + name, {
+      fetch("https://travel-guru-server-mocha-nine.vercel.app/hotels/" + name, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem(

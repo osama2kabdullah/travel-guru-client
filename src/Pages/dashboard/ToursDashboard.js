@@ -23,7 +23,7 @@ const ToursDashboard = () => {
     "Payment",
   ];
   const { data, isLoading, refetch } = useQuery("loadAllBookings", () =>
-    fetch("http://localhost:5000/allbookings/"+filter, {
+    fetch("https://travel-guru-server-mocha-nine.vercel.app/allbookings/"+filter, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${
