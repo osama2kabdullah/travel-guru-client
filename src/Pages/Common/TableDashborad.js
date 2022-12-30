@@ -173,7 +173,7 @@ const TableDashborad = ({
               onClick={() =>
                 setShowModal(["Remove this", place?.name, 'remove'])
               }
-              className="bg-red-100 text-red-800 mr-2 px-2.5 py-0.5 rounded cursor-pointer ">
+              className="bg-red-100 text-red-800 mr-2 px-2.5 py-0.5 rounded cursor-pointer">
                 Remove
               </button>
             </td>

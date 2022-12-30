@@ -32,7 +32,7 @@ const AltLogin = () => {
   useEffect(() => {
     if (!error && doc) {
       const { email, displayName, emailVerified, photoURL } = doc;
-      fetch("https://travel-guru-server-mocha-nine.vercel.app/insertUser", {
+      fetch("http://localhost:5000/insertUser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { AppContext } from "../../App";
+import Button from "../Common/Button";
 import DashboardTitle from "../Common/DashboardTitle";
 import Modal from "../Common/Modal";
 import TableDashborad from "../Common/TableDashborad";
@@ -25,7 +26,7 @@ const HotelsDashboard = () => {
   ];
   const currentUser = useContext(AppContext);
   const { data, isLoading, refetch } = useQuery("loadAllHotels", () =>
-    fetch("https://travel-guru-server-mocha-nine.vercel.app/allhotels", {
+    fetch("http://localhost:5000/allhotels", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")} ${
@@ -55,7 +56,7 @@ const HotelsDashboard = () => {
   const work = (methods, ovj) => {
     //lets call api
     fetch(
-      `https://travel-guru-server-mocha-nine.vercel.app/actionhotel/${methods[2]}/${methods[0]}/${methods[1]}`,
+      `http://localhost:5000/actionhotel/${methods[2]}/${methods[0]}/${methods[1]}`,
       {
         method: "PUT",
         headers: {
@@ -81,7 +82,7 @@ const HotelsDashboard = () => {
     const keys = form.map((form) => data?.[form]?.name);
     const values = form.map((form) => data?.[form]?.value);
     const object = combineArrays(keys, values);
-    
+
     let ovj;
     for (const key in object) {
       if (Object.hasOwnProperty.call(object, key)) {

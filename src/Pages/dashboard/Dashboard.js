@@ -4,11 +4,12 @@ import { useContext } from "react";
 import { Link, Outlet, useMatch, useResolvedPath } from "react-router-dom";
 import { AppContext } from "../../App";
 import fb from "../../travel-guru/images/icons/fb.png";
+import Button from "../Common/Button";
 import Modal from "../Common/Modal";
 
-const Dashboard = ({ currentUser }) => {
+const Dashboard = () => {
   const [openLink, setOpenLink] = useState(true);
-
+  const currentUser = useContext(AppContext);
   return (
     <section className="flex">
       <div
@@ -16,13 +17,14 @@ const Dashboard = ({ currentUser }) => {
           openLink && "hidden"
         } md:relative absolute bg-gray-100 h-screen`}
       >
-        <div className="flex justify-around items-center flex-wrap">
+        <div className="text-center py-3">
           <img
-            className="w-32"
-            src="https://i.picsum.photos/id/517/200/200.jpg?hmac=7n69zdD4qSZs14zMRZPUfLGKHFEIR9jTpoSEN1o990E"
+            className="rounded-full w-32 m-auto mt-3"
+            src={currentUser?.photoURL ||"https://i.picsum.photos/id/517/200/200.jpg?hmac=7n69zdD4qSZs14zMRZPUfLGKHFEIR9jTpoSEN1o990E"}
             alt=""
           />
-          <h1 className="text-xl font-bold">{currentUser?.email}</h1>
+          <h1 className="text-xl font-bold">{currentUser?.displayName || 'Admin Name'}</h1>
+          <span className="bg-green-100 text-green-800 mr-2 px-2.5 py-0.5 rounded">{currentUser?.email}</span>
         </div>
 
         <div className="p-2 leading-9">
@@ -56,7 +58,6 @@ const Dashboard = ({ currentUser }) => {
       <div className="p-5">
         <Outlet />
       </div>
- 
     </section>
   );
 };

@@ -28,7 +28,7 @@ const HotelDetails = () => {
 
   //validate user
   useEffect(()=>{
-      fetch('https://travel-guru-server-mocha-nine.vercel.app/usersforbookhotel/'+name, {
+      fetch('http://localhost:5000/usersforbookhotel/'+name, {
         method:'GET',
         headers: {
           authorization:`Bearer ${localStorage.getItem('authorization_token')} ${currentUser?.email}`
@@ -43,7 +43,7 @@ const HotelDetails = () => {
     e.preventDefault();
     setBookLoadiung(true);
     const data = {days :e.target.days.value, rooms :e.target.rooms.value, adults: e.target.adults.value, children: e.target.children.value }
-    fetch("https://travel-guru-server-mocha-nine.vercel.app/bookhotel/" + bookingId + "/"+ hotelname + "/"+ name, {
+    fetch("http://localhost:5000/bookhotel/" + bookingId + "/"+ hotelname + "/"+ name, {
       method: "POST",
       headers: {
         authorization: "Bearer " + localStorage.getItem("authorization_token") + " " + currentUser.email,

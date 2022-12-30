@@ -21,7 +21,7 @@ const PayBookinng = () => {
 
   //get cost
   useEffect(() => {
-    fetch("https://travel-guru-server-mocha-nine.vercel.app/getcost/" + bookingId, {
+    fetch("http://localhost:5000/getcost/" + bookingId, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("authorization_token")}`,
@@ -60,7 +60,7 @@ const CheckoutForm = ({ cost, bookingId }) => {
   useEffect(() => {
     if (transection && currentUser) {
       const { id, currency, amount } = transection;
-      fetch("https://travel-guru-server-mocha-nine.vercel.app/updateforpay/" + bookingId, {
+      fetch("http://localhost:5000/updateforpay/" + bookingId, {
         method: "PUT",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
@@ -83,7 +83,7 @@ const CheckoutForm = ({ cost, bookingId }) => {
   useEffect(() => {
     setSuccess("");
     if (cost) {
-      fetch("https://travel-guru-server-mocha-nine.vercel.app/paymentIntent", {
+      fetch("http://localhost:5000/paymentIntent", {
         method: "POST",
         headers: {
           authorization: `Bearer ${localStorage.getItem(
