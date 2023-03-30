@@ -1,51 +1,48 @@
-# Building progress
+# Project Title
 
-#### temporary l;ive link - +  hosting:channel: Channel URL (travel-guru-b4986): https://travel-guru-b4986--testing-jnlfa3wh.web.app 
+##  Why I made this project and which problem solved by this project?
+Basically I finished a web development course. I has build some project before this project but that was assignment. After finishing the course I decide I want to implement my knowldge that I gtahered from the corse. Thats why I build this app. [Read more ...](https://github.com/osama2kabdullah/travel-guru-client/wiki/Stack-explaination-Q&A)
 
-temporary deploy command 
-```firebase hosting:channel:deploy testing```
+I also give you presentation file, where I describe all the things. [visit](https://docs.google.com/presentation/d/1ssWHY2IVo-YyInOiDP2PbBqJx4y8ETH8AoYi9mESZN4/edit?usp=sharing)
 
-### 1. Home page
-- slider created (can be make bettar)
-- dynamically backgeound image set and details text displaying
-- booking form opened by clicking booking button
-- start date and end date set and also dynamic it.
-- by clicking on start booking button. the order save in database and redirect the user in my bookings page.
-- if user not loging or login session expired the booking proccess not work properly. it display an error.
+## Run app in your local
 
-### 2. My bookings page
-- here all of the bookings
-- user can filter which booking see like previus booking or future bookings.
-- the single booking card component containing -
-  - a photo of place
-  - a map with marker for exact location
-  - pay button
-    - by click pay button you will redirect the payment page
-    - here you can pay with card
-    - after payment recieved you will redirect the my bookings page
-  - if not paid the cancel button showing.
-  - hotel booking info
-    - if no hotel booked there show in link that redirecting.
-    - if boked any hotel you see the total cost based one your living days
-    
-### 3. Hotel booking page
-- there are display some hotels based on tour place
-- there are a map that shown all the hotels exact location by marking
-- by clicking hotel name to redirect hotel booking page
-- in this page included a form and some picture of the hotel
-- after submiting form you will be redirect the My bookings page
+Follow this [instruction](https://github.com/osama2kabdullah/travel-guru-client/wiki/Run-app-locally)
 
-### 4. Login page
-- login and register system applied (log out button shown in heder)
+## Usage
+1. As a `user`, read this [guidline](https://github.com/osama2kabdullah/travel-guru-client/wiki/User-usage-example)
+2. As a `admin`, read this [guidline](https://github.com/osama2kabdullah/travel-guru-client/wiki/Admin-usage-example)
 
-### Admin Dashboard
+## Features
 
+* User authentication
+* Payment system
+* Dynamically control app from Admin dashboard
 
-# Issues (user roll)
-1. Admin dashboard form modal responsive problem in [Modal.js](./src/Pages/Common/Modal.js)
-2. 
+For know more indepth, read useage example links that mentioned above.
 
-# Upcoming fetures
-1. Bus booking
+## Technologies
 
+I have already describe about what technology used and why. Checkout this [wiki](https://github.com/osama2kabdullah/travel-guru-client/wiki/Stack-explaination-Q&A)
 
+## Contribution Guidelines
+
+If you would like to contribute to this project, please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes and commit them.
+4. Push your changes to your fork.
+5. Submit a pull request.
+
+## License
+
+This project is licensed under the `MIT` license. See the [LICENSE](https://github.com/osama2kabdullah/travel-guru-client/blob/main/LICENSE) file for details.
+
+## Acknowledgments
+
+I would like to thank the following people and team for their help:
+
+- [Robiul Awal](https://github.com/Robiul92) for giving me a place where I found a learning environment.
+- [Programming Hero team](https://github.com/ProgrammingHero1) for providing the UI design file.
+- [Jhankar Mahbub](https://github.com/jhankarpHero) for teaching me. Love you sir, I remember you always.
