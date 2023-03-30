@@ -1,4 +1,4 @@
-# Project Title
+# Travel Guru - Travel management web app
 
 ##  Why I made this project and which problem solved by this project?
 Basically I finished a web development course. I has build some project before this project but that was assignment. After finishing the course I decide I want to implement my knowldge that I gtahered from the corse. Thats why I build this app. [Read more ...](https://github.com/osama2kabdullah/travel-guru-client/wiki/Stack-explaination-Q&A)
